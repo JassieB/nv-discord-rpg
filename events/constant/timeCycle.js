@@ -37,7 +37,6 @@ module.exports = {
                     if(err) return console.error(err);
     
                     timecycle.time = 'Day';
-                    timecycle
                 });
     
                 const dayEmbed = new Discord.MessageEmbed()
@@ -64,7 +63,6 @@ module.exports = {
                     if(err) return console.error(err);
     
                     timecycle.time = 'Night';
-                    timecycle
                 });
     
                 const nightEmbed = new Discord.MessageEmbed()

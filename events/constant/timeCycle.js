@@ -78,9 +78,7 @@ module.exports = {
 
                 daytime();
 
-            }
-
-            if(timecycle.time == 'Day'){
+            } else if(timecycle.time == 'Day'){
                 daytime();
             } else if(timecycle.time == 'Night'){
                 nighttime();

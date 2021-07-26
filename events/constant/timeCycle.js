@@ -12,6 +12,21 @@ module.exports = {
         },
         (err, timecycle) => {
             if(err) return console.error(err);
+            
+            if(!timecycle){
+
+                new TimeCycleSchema({
+                    guildID: guild.id,
+                    time: 'Day',
+                }).save();
+
+                daytime();
+
+            } else if(timecycle.time == 'Day'){
+                daytime();
+            } else if(timecycle.time == 'Night'){
+                nighttime();
+            }
 
             const daytime = async () => {
 
@@ -65,23 +80,6 @@ module.exports = {
                 client.channels.cache.get('860170657233109023').send(nightEmbed);
     
                 setTimeout(daytime, 2400000)
-            }
-    
-
-
-            if(!timecycle){
-
-                new TimeCycleSchema({
-                    guildID: guild.id,
-                    time: 'Day',
-                }).save();
-
-                daytime();
-
-            } else if(timecycle.time == 'Day'){
-                daytime();
-            } else if(timecycle.time == 'Night'){
-                nighttime();
             }
         })
         

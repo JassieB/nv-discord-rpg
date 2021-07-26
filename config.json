@@ -1,0 +1,5 @@
+{
+    "token": "ODU2MTkxMzQ2MTQ2ODAzNzEz.YM9cVA.VEN_oU6WcNyFFUm8KBiAjcloe1A",
+    "mongo_url": "mongodb+srv://Client:ClientAccess@testdb.wm0pd.mongodb.net/TNV?retryWrites=true&w=majority",
+    "prefix": "^"
+}

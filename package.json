@@ -1,0 +1,12 @@
+{
+    "name": "nv-rpg-bot",
+    "description": "a discord rpg bot",
+    "authors": "Jas",
+    "version": "0.0.3",
+    "main": "bot.js",
+    "dependencies": {
+        "discord.js": "^12.5.3",
+        "mongoose": "^5.12.14",
+        "nodemon": "^2.0.12"
+    }
+}

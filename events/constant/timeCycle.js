@@ -13,19 +13,23 @@ module.exports = {
         (err, timecycle) => {
             if(err) return console.error(err);
             
-            if(!timecycle){
+            const checkTime = async () => {
 
-                new TimeCycleSchema({
-                    guildID: guild.id,
-                    time: 'Day',
-                }).save();
+                if(!timecycle){
 
-                daytime();
+                    new TimeCycleSchema({
+                        guildID: guild.id,
+                        time: 'Day',
+                    }).save();
+    
+                    daytime();
+    
+                } else if(timecycle.time == 'Day'){
+                    daytime();
+                } else if(timecycle.time == 'Night'){
+                    nighttime();
+                }
 
-            } else if(timecycle.time == 'Day'){
-                daytime();
-            } else if(timecycle.time == 'Night'){
-                nighttime();
             }
 
             const daytime = async () => {
@@ -79,6 +83,8 @@ module.exports = {
     
                 setTimeout(daytime, 2400000)
             }
+            
+            checkTime();
         })
         
     }

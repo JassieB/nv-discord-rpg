@@ -1,6 +1,7 @@
 const mongo = require('../../mongo.js');
 const Money = require('../../models/character.js');
 const Discord = require('discord.js');
+const settingSchema = require('../../models/guildsettings.js');
 
 module.exports = {
     commands: ['addcoins', 'givecoins'],
@@ -12,7 +13,7 @@ module.exports = {
         };
 
         let amount = arguments[0] ;
-        let player = message.guild.member(message.mentions.users.first());
+        let player = message.mentions.users.first();
 
         Money.findOne({
             guildID: guild.id,

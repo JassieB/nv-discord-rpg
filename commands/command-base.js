@@ -24,7 +24,7 @@ module.exports = (commandOptions) => {
 
 module.exports.listen = (client) => {
 
-    client.on('message', message => {
+    client.on('messageCreate', message => {
         const { member, content, guild } = message;
 
         const arguments = content.split(/[  ]+/);

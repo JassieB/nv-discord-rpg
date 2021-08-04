@@ -1,16 +1,20 @@
 const Discord = require('discord.js');
+const Settings = require('../../../models/guildsettings.js');
 
 module.exports = {
     commands: ['town'],
     description: '',
     callback: async (message, client, guild, arguments) => {
-        const bot = guild.members.cache.get('856191346146803713');
         
-        if(message.member.user.id != '714070826248437770' && bot.roles.cache.has('867760855109992468')){
-            return;
-        }
+        Settings.findOne({
+            guildID: guild.id,
+        },
+        async (err, settings) => {
+            if(err) console.error(err);
 
-        message.delete();
+            if(settings.commandsActive == true || message.member.user.id == '714070826248437770'){
+                
+                message.delete();
 
         const axel = client.channels.cache.get('860145504993411103');
         const axelGuild = client.channels.cache.get('868254705183260682');
@@ -38,113 +42,117 @@ module.exports = {
         const mohshireMarkets = client.channels.cache.get('860170518900899893');
         const mohshireForest = client.channels.cache.get('860171058593136650');
         
-        if(message.channel == axelGuild){
+                if(message.channel == axelGuild){
 
-            await axel.updateOverwrite(message.member, {
-                "VIEW_CHANNEL": true,
-                "SEND_MESSAGES": true,
-                "READ_MESSAGE_HISTORY": true,
-                "ADD_REACTIONS": true,
-            });
-            await axelGuild.updateOverwrite(message.member, {
-                "VIEW_CHANNEL": false,
-                "SEND_MESSAGES": false,
-                "READ_MESSAGE_HISTORY": false,
-                "ADD_REACTIONS": false,
-            });
+                    await axel.updateOverwrite(message.member, {
+                        "VIEW_CHANNEL": true,
+                        "SEND_MESSAGES": true,
+                        "READ_MESSAGE_HISTORY": true,
+                        "ADD_REACTIONS": true,
+                    });
+                    await axelGuild.updateOverwrite(message.member, {
+                        "VIEW_CHANNEL": false,
+                        "SEND_MESSAGES": false,
+                        "READ_MESSAGE_HISTORY": false,
+                        "ADD_REACTIONS": false,
+                    });
 
-            let townEmbed = new Discord.MessageEmbed()
-            .setColor('#0fff93')
-            .setAuthor(`${message.member.nickname} has left The Guild and is back in the town streets.`);
+                    let townEmbed = new Discord.MessageEmbed()
+                    .setColor('#0fff93')
+                    .setAuthor(`${message.member.nickname} has left The Guild and is back in the town streets.`);
 
-            let leaveEmbed = new Discord.MessageEmbed()
-            .setColor('#0fff93')
-            .setAuthor(`${message.member.nickname} has exited the Guild into town.`);
+                    let leaveEmbed = new Discord.MessageEmbed()
+                    .setColor('#0fff93')
+                    .setAuthor(`${message.member.nickname} has exited the Guild into town.`);
 
-            axelGuild.send(leaveEmbed);
-            axel.send(townEmbed);
+                    axelGuild.send(leaveEmbed);
+                    axel.send(townEmbed);
 
-        } else if(message.channel == axelSmith){
-            await axel.updateOverwrite(message.member, {
-                "VIEW_CHANNEL": true,
-                "SEND_MESSAGES": true,
-                "READ_MESSAGE_HISTORY": true,
-                "ADD_REACTIONS": true,
-            });
+                } else if(message.channel == axelSmith){
+                    await axel.updateOverwrite(message.member, {
+                        "VIEW_CHANNEL": true,
+                        "SEND_MESSAGES": true,
+                        "READ_MESSAGE_HISTORY": true,
+                        "ADD_REACTIONS": true,
+                    });
 
-            await axelSmith.updateOverwrite(message.member, {
-                "VIEW_CHANNEL": false,
-                "SEND_MESSAGES": false,
-                "READ_MESSAGE_HISTORY": false,
-                "ADD_REACTIONS": false,
-            });
+                    await axelSmith.updateOverwrite(message.member, {
+                        "VIEW_CHANNEL": false,
+                        "SEND_MESSAGES": false,
+                        "READ_MESSAGE_HISTORY": false,
+                        "ADD_REACTIONS": false,
+                    });
 
-            let townEmbed = new Discord.MessageEmbed()
-            .setColor('#0fff93')
-            .setAuthor(`${message.member.nickname} has left The Blacksmith shop and is back in the town streets.`);
+                    let townEmbed = new Discord.MessageEmbed()
+                    .setColor('#0fff93')
+                    .setAuthor(`${message.member.nickname} has left The Blacksmith shop and is back in the town streets.`);
 
-            let leaveEmbed = new Discord.MessageEmbed()
-            .setColor('#0fff93')
-            .setAuthor(`${message.member.nickname} has exited the Blacksmith shop into town.`);
+                    let leaveEmbed = new Discord.MessageEmbed()
+                    .setColor('#0fff93')
+                    .setAuthor(`${message.member.nickname} has exited the Blacksmith shop into town.`);
 
-            axelSmith.send(leaveEmbed);
-            axel.send(townEmbed);
+                    axelSmith.send(leaveEmbed);
+                    axel.send(townEmbed);
 
-        } else if(message.channel == axelMarkets){
+                } else if(message.channel == axelMarkets){
 
-            await axel.updateOverwrite(message.member, {
-                "VIEW_CHANNEL": true,
-                "SEND_MESSAGES": true,
-                "READ_MESSAGE_HISTORY": true,
-                "ADD_REACTIONS": true,
-            });
+                    await axel.updateOverwrite(message.member, {
+                        "VIEW_CHANNEL": true,
+                        "SEND_MESSAGES": true,
+                        "READ_MESSAGE_HISTORY": true,
+                        "ADD_REACTIONS": true,
+                    });
 
-            await axelMarkets.updateOverwrite(message.member, {
-                "VIEW_CHANNEL": false,
-                "SEND_MESSAGES": false,
-                "READ_MESSAGE_HISTORY": false,
-                "ADD_REACTIONS": false,
-            });
+                    await axelMarkets.updateOverwrite(message.member, {
+                        "VIEW_CHANNEL": false,
+                        "SEND_MESSAGES": false,
+                        "READ_MESSAGE_HISTORY": false,
+                        "ADD_REACTIONS": false,
+                    });
 
-            let townEmbed = new Discord.MessageEmbed()
-            .setColor('#0fff93')
-            .setAuthor(`${message.member.nickname} has left The markets and is back in the town streets.`);
+                    let townEmbed = new Discord.MessageEmbed()
+                    .setColor('#0fff93')
+                    .setAuthor(`${message.member.nickname} has left The markets and is back in the town streets.`);
 
-            let leaveEmbed = new Discord.MessageEmbed()
-            .setColor('#0fff93')
-            .setAuthor(`${message.member.nickname} has exited the markets into town.`);
+                    let leaveEmbed = new Discord.MessageEmbed()
+                    .setColor('#0fff93')
+                    .setAuthor(`${message.member.nickname} has exited the markets into town.`);
 
-            axelMarkets.send(leaveEmbed);
-            axel.send(townEmbed);
+                    axelMarkets.send(leaveEmbed);
+                    axel.send(townEmbed);
 
-        } else if(message.channel == axelForest){
+                } else if(message.channel == axelForest){
 
-            await axel.updateOverwrite(message.member, {
-                "VIEW_CHANNEL": true,
-                "SEND_MESSAGES": true,
-                "READ_MESSAGE_HISTORY": true,
-                "ADD_REACTIONS": true,
-            });
+                    await axel.updateOverwrite(message.member, {
+                        "VIEW_CHANNEL": true,
+                        "SEND_MESSAGES": true,
+                        "READ_MESSAGE_HISTORY": true,
+                        "ADD_REACTIONS": true,
+                    });
 
-            await axelForest.updateOverwrite(message.member, {
-                "VIEW_CHANNEL": false,
-                "SEND_MESSAGES": false,
-                "READ_MESSAGE_HISTORY": false,
-                "ADD_REACTIONS": false,
-            });
+                    await axelForest.updateOverwrite(message.member, {
+                        "VIEW_CHANNEL": false,
+                        "SEND_MESSAGES": false,
+                        "READ_MESSAGE_HISTORY": false,
+                        "ADD_REACTIONS": false,
+                    });
 
-            let townEmbed = new Discord.MessageEmbed()
-            .setColor('#0fff93')
-            .setAuthor(`${message.member.nickname} has left The forest and is back in the town streets.`);
+                    let townEmbed = new Discord.MessageEmbed()
+                    .setColor('#0fff93')
+                    .setAuthor(`${message.member.nickname} has left The forest and is back in the town streets.`);
 
-            let leaveEmbed = new Discord.MessageEmbed()
-            .setColor('#0fff93')
-            .setAuthor(`${message.member.nickname} has exited the forest into town.`);
+                    let leaveEmbed = new Discord.MessageEmbed()
+                    .setColor('#0fff93')
+                    .setAuthor(`${message.member.nickname} has exited the forest into town.`);
 
-            axelForest.send(leaveEmbed);
-            axel.send(townEmbed);
+                    axelForest.send(leaveEmbed);
+                    axel.send(townEmbed);
 
-        }
+                }
+
+            }
+
+        })
 
     }    
 }

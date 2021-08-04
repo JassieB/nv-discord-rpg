@@ -1,90 +1,98 @@
 const TimeCycle = require('../../models/time.js');
-const TimeCycleSchema = require('../../models/time.js');
 const Discord = require('discord.js');
+const Settings = require('../../models/guildsettings.js');
 
 module.exports = {
     events: ['day/night-cycle'],
     description: '',
     callback: async (client, guild) => {
 
-        TimeCycle.findOne({
+        Settings.findOne({
             guildID: guild.id,
         },
-        (err, timecycle) => {
-            if(err) return console.error(err);
-            
-            const checkTime = async () => {
+        (err, settings) => {
+            if(err) console.error(err);
 
-                if(!timecycle){
-
-                    new TimeCycleSchema({
-                        guildID: guild.id,
-                        time: 'Day',
-                    }).save();
-    
-                    daytime();
-    
-                } else if(timecycle.time == 'Day'){
-                    daytime();
-                } else if(timecycle.time == 'Night'){
-                    nighttime();
-                }
-
-            }
-
-            const daytime = async () => {
-
+            if(settings.timeActive == true){
+                
                 TimeCycle.findOne({
                     guildID: guild.id,
                 },
                 (err, timecycle) => {
                     if(err) return console.error(err);
-    
-                    timecycle.time = 'Day';
-                });
-    
-                const dayEmbed = new Discord.MessageEmbed()
-                .setTitle('The sun rises. Night is over.')
-                .setColor('#e3ae00')
-                .setDescription('Monsters spawn less frequently than in the night. Monsters that spawn during the day give less loot and are weaker.')
-                .setTimestamp();
-    
-                client.channels.cache.get('860145504993411103').send(dayEmbed);
-                client.channels.cache.get('868254705183260682').send(dayEmbed);
-                client.channels.cache.get('860170056671428628').send(dayEmbed);
-                client.channels.cache.get('860170256739729418').send(dayEmbed);
-                client.channels.cache.get('860170657233109023').send(dayEmbed);
-    
-                setTimeout(nighttime, 4800000)
-            }
-    
-            const nighttime = async () => {
 
-                TimeCycle.findOne({
-                    guildID: guild.id,
-                },
-                (err, timecycle) => {
-                    if(err) return console.error(err);
-    
-                    timecycle.time = 'Night';
-                });
-    
-                const nightEmbed = new Discord.MessageEmbed()
-                .setTitle('The sun sets. Night begins.')
-                .setColor('#2b1f5c')
-                .setDescription('Monsters spawn frequently during the night. Monsters that spawn during the night give more loot and are stronger.')
-                .setTimestamp();
-    
-                client.channels.cache.get('860145504993411103').send(nightEmbed);
-                client.channels.cache.get('868254705183260682').send(nightEmbed);
-                client.channels.cache.get('860170056671428628').send(nightEmbed);
-                client.channels.cache.get('860170256739729418').send(nightEmbed);
-                client.channels.cache.get('860170657233109023').send(nightEmbed);
-    
-                setTimeout(daytime, 2400000)
+                    const dayImg1 = new Discord.MessageAttachment('./assets/timecycle/sunrise.jpg')
+                    const dayEmbed = new Discord.MessageEmbed()
+                    .setTitle('The sun rises. Night is over.')
+                    .setColor('#e3ae00')
+                    .setImage('attachment://sunrise.jpg')
+                    .setDescription('Monsters spawn less frequently than in the night. Monsters that spawn during the day give less loot and are weaker.')
+                    .setTimestamp();
+
+                    const nightImg1 = new Discord.MessageAttachment('./assets/timecycle/sunset.jpg')
+                    const nightEmbed = new Discord.MessageEmbed()
+                    .setTitle('The sun sets. Night begins.')
+                    .setColor('#2b1f5c')
+                    .setImage('attachment://sunset.jpg')
+                    .setDescription('Monsters spawn frequently during the night. Monsters that spawn during the night give more loot and are stronger.')
+                    .setTimestamp();
+
+                    const getChannels = async (embed, image) => {
+
+                        let chans = [];
+
+                        client.channels.cache.forEach(channel => {
+                            if(channel.name.startsWith('🌆') || channel.name.startsWith('🛡') || channel.name.startsWith('🔨') || channel.name.startsWith('💰') || channel.name.startsWith('🌳')){
+
+                                chans.push(channel.id);
+
+                            }
+                        })
+
+                        for(let i = 0; i < chans.length; i++){
+
+                            await client.channels.cache.get(chans[i]).send({ embeds: [ embed ], files: [ image ] });
+
+                        }
+
+                    }
+
+                    const setNights = async () => {
+
+                        timecycle.timeLeft = 50;
+                        getChannels(nightEmbed, nightImg1);
+
+                        setTimeout(setDays, 50 * 60 * 1000);
+
+                    }
+
+                    const setDays = async () => {
+
+                        timecycle.timeLeft = 90;
+                        getChannels(dayEmbed, dayImg1);
+
+                        setTimeout(setDays, 90 * 60 * 1000);
+
+                    }
+
+                    if(timecycle.time == 'Day'){
+
+                        let timeout = timecycle.timeLeft * 60 * 1000;
+
+                        setTimeout(setNights, timeout);
+
+                    } else if(timecycle.time == 'Night'){
+
+                        let timeout = timecycle.timeLeft * 60 * 1000;
+
+                        setTimeout(setDays, timeout);
+
+                    }
+
+                })
+
             }
-            
-            checkTime();
+
         })
         
     }

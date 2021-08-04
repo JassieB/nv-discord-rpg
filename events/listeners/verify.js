@@ -43,7 +43,7 @@ module.exports = {
                             });
                         
                             memberReact.roles.add('867761358296711218');
-                            channel.send(`**Welcome ${memberReact.user.username}!**\nTo learn about the game before you play, you can use \`^howtoplay\` to find out all the info.\nOnce you are set to go, use \`^startgame\` to start your adventure!`)
+                            channel.send(`**Welcome ${memberReact.user.username}!**\nOnce you are set to go, use \`^startgame\` to start your adventure!`)
                         })
                     }
 

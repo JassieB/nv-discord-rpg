@@ -9,9 +9,9 @@ const reqString = {
 const timeSchema = new mongoose.Schema({
     guildID: reqString,
     time: reqString,
-    timestamp: {
-        type: Date,
-        default: Date.now(),
+    minutesLeft: {
+        type: Number,
+        default: 0,
     },
 })
 

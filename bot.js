@@ -1,6 +1,8 @@
 // Discord Requires
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const client = new Discord.Client({
+    intents: 32767,
+});
 
 // Other Requires
 const fs = require('fs');
@@ -9,6 +11,8 @@ const path = require('path');
 // File Requires
 const config = require("./config.json");
 const mongo = require('./mongo.js');
+
+// Collections
 
 client.on('ready', () => {
     mongo();
@@ -49,6 +53,8 @@ client.on('ready', () => {
     readCommands('commands');
 
     commandBase.listen(client);
-})
+
+    console.log("Bot has Started");
+});
 
 client.login(config.token);

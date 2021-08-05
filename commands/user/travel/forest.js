@@ -44,14 +44,14 @@ module.exports = {
         
                 if(message.channel == axel){
 
-                    await axel.updateOverwrite(message.member, {
+                    await axel.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": false,
                         "SEND_MESSAGES": false,
                         "READ_MESSAGE_HISTORY": false,
                         "ADD_REACTIONS": false,
                     });
 
-                    await axelForest.updateOverwrite(message.member, {
+                    await axelForest.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": true,
                         "SEND_MESSAGES": true,
                         "READ_MESSAGE_HISTORY": true,

@@ -44,35 +44,17 @@ module.exports = {
                 
                 if(message.channel == axel){
                     
-                    await axel.updateOverwrite(message.member, {
+                    await axel.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": false,
                         "SEND_MESSAGES": false,
                         "READ_MESSAGE_HISTORY": false,
                         "ADD_REACTIONS": false,
                     });
-                    await axelGuild.updateOverwrite(message.member, {
-                        "VIEW_CHANNEL": false,
-                        "SEND_MESSAGES": false,
-                        "READ_MESSAGE_HISTORY": false,
-                        "ADD_REACTIONS": false,
-                    });
-                    await axelSmith.updateOverwrite(message.member, {
+                    await axelSmith.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": true,
                         "SEND_MESSAGES": true,
                         "READ_MESSAGE_HISTORY": true,
                         "ADD_REACTIONS": true,
-                    });
-                    await axelMarkets.updateOverwrite(message.member, {
-                        "VIEW_CHANNEL": false,
-                        "SEND_MESSAGES": false,
-                        "READ_MESSAGE_HISTORY": false,
-                        "ADD_REACTIONS": false,
-                    });
-                    await axelForest.updateOverwrite(message.member, {
-                        "VIEW_CHANNEL": false,
-                        "SEND_MESSAGES": false,
-                        "READ_MESSAGE_HISTORY": false,
-                        "ADD_REACTIONS": false,
                     });
                     
                     let smithEmbed = new Discord.MessageEmbed()

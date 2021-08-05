@@ -44,13 +44,13 @@ module.exports = {
         
                 if(message.channel == axelGuild){
 
-                    await axel.updateOverwrite(message.member, {
+                    await axel.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": true,
                         "SEND_MESSAGES": true,
                         "READ_MESSAGE_HISTORY": true,
                         "ADD_REACTIONS": true,
                     });
-                    await axelGuild.updateOverwrite(message.member, {
+                    await axelGuild.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": false,
                         "SEND_MESSAGES": false,
                         "READ_MESSAGE_HISTORY": false,
@@ -69,14 +69,14 @@ module.exports = {
                     axel.send({ embeds: [ townEmbed ] });
 
                 } else if(message.channel == axelSmith){
-                    await axel.updateOverwrite(message.member, {
+                    await axel.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": true,
                         "SEND_MESSAGES": true,
                         "READ_MESSAGE_HISTORY": true,
                         "ADD_REACTIONS": true,
                     });
 
-                    await axelSmith.updateOverwrite(message.member, {
+                    await axelSmith.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": false,
                         "SEND_MESSAGES": false,
                         "READ_MESSAGE_HISTORY": false,
@@ -96,14 +96,14 @@ module.exports = {
 
                 } else if(message.channel == axelMarkets){
 
-                    await axel.updateOverwrite(message.member, {
+                    await axel.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": true,
                         "SEND_MESSAGES": true,
                         "READ_MESSAGE_HISTORY": true,
                         "ADD_REACTIONS": true,
                     });
 
-                    await axelMarkets.updateOverwrite(message.member, {
+                    await axelMarkets.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": false,
                         "SEND_MESSAGES": false,
                         "READ_MESSAGE_HISTORY": false,
@@ -123,14 +123,14 @@ module.exports = {
 
                 } else if(message.channel == axelForest){
 
-                    await axel.updateOverwrite(message.member, {
+                    await axel.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": true,
                         "SEND_MESSAGES": true,
                         "READ_MESSAGE_HISTORY": true,
                         "ADD_REACTIONS": true,
                     });
 
-                    await axelForest.updateOverwrite(message.member, {
+                    await axelForest.permissionOverwrites.edit(message.member, {
                         "VIEW_CHANNEL": false,
                         "SEND_MESSAGES": false,
                         "READ_MESSAGE_HISTORY": false,

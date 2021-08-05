@@ -66,8 +66,8 @@ module.exports = {
                     .setColor('#0fff93')
                     .setAuthor(`${message.member.nickname} is off the streets exploring the markets.`);
 
-                    axel.send(leaveEmbed);
-                    axelMarkets.send(marketsEmbed);
+                    axel.send({ embeds: [ leaveEmbed ] });
+                    axelMarkets.send({ embeds: [ marketsEmbed ] });
 
                 }                
 

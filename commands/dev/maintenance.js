@@ -42,7 +42,7 @@ module.exports = {
                 settings.timeActive = false;
                 settings.commandsActive = false;
                 settings.logsActive = false;
-                settings.commandsActive = false;
+                settings.spawningActive = false;
                 settings.save()
 
                 bot.roles.add('867760855109992468');
@@ -56,7 +56,7 @@ module.exports = {
                 settings.timeActive = true;
                 settings.commandsActive = true;
                 settings.logsActive = true;
-                settings.commandsActive = true;
+                settings.spawningActive = true;
                 settings.save()
 
                 bot.roles.remove('867760855109992468');

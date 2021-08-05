@@ -66,8 +66,8 @@ module.exports = {
                     .setColor('#0fff93')
                     .setAuthor(`${message.member.nickname} is off the streets into The Guild.`);
 
-                    axel.send(leaveEmbed);
-                    axelGuild.send(guildEmbed);
+                    axel.send({ embeds: [ leaveEmbed ] });
+                    axelGuild.send({ embeds: [ guildEmbed ] });
 
                 }
 

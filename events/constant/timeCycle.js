@@ -57,35 +57,68 @@ module.exports = {
 
                     }
 
+                    const clearMinute = async () => {
+
+                        timecycle.minutesLeft = timecycle.minutesLeft - 1;
+                        timecycle.save();
+
+                    }
+
                     const setNights = async () => {
 
-                        timecycle.timeLeft = 50;
+                        timecycle.minutesLeft = 50;
+                        timecycle.time = 'Night';
+                        timecycle.save();
                         getChannels(nightEmbed, nightImg1);
 
+                        let interval4 = setInterval(clearMinute, 60 * 1000);
+
                         setTimeout(setDays, 50 * 60 * 1000);
+
+                        setTimeout(() => {
+                            clearInterval(interval4)
+                            setDays();
+                        }, 50 * 60 * 1000);
 
                     }
 
                     const setDays = async () => {
 
-                        timecycle.timeLeft = 90;
+                        timecycle.minutesLeft = 90;
+                        timecycle.time = 'Day';
+                        timecycle.save();
                         getChannels(dayEmbed, dayImg1);
 
-                        setTimeout(setDays, 90 * 60 * 1000);
+                        let interval3 = setInterval(clearMinute, 60 * 1000);
+
+                        setTimeout(() => {
+                            clearInterval(interval3)
+                            setNights();
+                        }, 90 * 60 * 1000);
 
                     }
 
                     if(timecycle.time == 'Day'){
 
-                        let timeout = timecycle.timeLeft * 60 * 1000;
+                        let timeoutTime = timecycle.minutesLeft * 60 * 1000;
 
-                        setTimeout(setNights, timeout);
+                        let interval1 = setInterval(clearMinute, 60 * 1000);
+
+                        setTimeout(() => {
+                            clearInterval(interval1)
+                            setNights();
+                        }, timeoutTime);
 
                     } else if(timecycle.time == 'Night'){
 
-                        let timeout = timecycle.timeLeft * 60 * 1000;
+                        let timeoutTime = timecycle.minutesLeft * 60 * 1000;
 
-                        setTimeout(setDays, timeout);
+                        let interval2 = setInterval(clearMinute, 60 * 1000);
+
+                        setTimeout(() => {
+                            clearInterval(interval2)
+                            setDays();
+                        }, timeoutTime); 
 
                     }
 

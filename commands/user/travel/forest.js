@@ -66,8 +66,8 @@ module.exports = {
                     .setColor('#0fff93')
                     .setAuthor(`${message.member.nickname} is off the streets heading into the forest.`);
 
-                    axel.send(leaveEmbed);
-                    axelForest.send(forestEmbed);
+                    axel.send({ embeds: [ leaveEmbed ] });
+                    axelForest.send({ embeds: [ forestEmbed ] });
 
                 }
 

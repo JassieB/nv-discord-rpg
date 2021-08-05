@@ -75,16 +75,16 @@ module.exports = {
                         "ADD_REACTIONS": false,
                     });
                     
-                    let marketsEmbed = new Discord.MessageEmbed()
+                    let smithEmbed = new Discord.MessageEmbed()
                     .setColor('#0fff93')
-                    .setAuthor(`${message.member.nickname} is now exploring the markets.`);
+                    .setAuthor(`${message.member.nickname} is now in the blacksmith shop.`);
                     
                     let leaveEmbed = new Discord.MessageEmbed()
                     .setColor('#0fff93')
                     .setAuthor(`${message.member.nickname} is off the streets into the blacksmith shop.`);
                     
-                    axel.send(leaveEmbed);
-                    axelMarkets.send(marketsEmbed);
+                    axel.send({ embeds: [ leaveEmbed ] });
+                    axelSmith.send({ embeds: [ smithEmbed ] });
                     
                 }
                 

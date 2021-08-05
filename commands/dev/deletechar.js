@@ -10,7 +10,7 @@ module.exports = {
         if(!message.member.user.id == '714070826248437770'){
         };
 
-        const memb = message.guild.member(message.mentions.users.first());
+        const memb = guild.members.cache.get(message.mentions.users.first().id);
 
         Character.findOne({
             guildID: guild.id,

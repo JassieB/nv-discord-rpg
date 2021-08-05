@@ -65,8 +65,8 @@ module.exports = {
                     .setColor('#0fff93')
                     .setAuthor(`${message.member.nickname} has exited the Guild into town.`);
 
-                    axelGuild.send(leaveEmbed);
-                    axel.send(townEmbed);
+                    axelGuild.send({ embeds: [ leaveEmbed ] });
+                    axel.send({ embeds: [ townEmbed ] });
 
                 } else if(message.channel == axelSmith){
                     await axel.updateOverwrite(message.member, {
@@ -91,8 +91,8 @@ module.exports = {
                     .setColor('#0fff93')
                     .setAuthor(`${message.member.nickname} has exited the Blacksmith shop into town.`);
 
-                    axelSmith.send(leaveEmbed);
-                    axel.send(townEmbed);
+                    axelSmith.send({ embeds: [ leaveEmbed ] });
+                    axel.send({ embeds: [ townEmbed ] });
 
                 } else if(message.channel == axelMarkets){
 
@@ -118,8 +118,8 @@ module.exports = {
                     .setColor('#0fff93')
                     .setAuthor(`${message.member.nickname} has exited the markets into town.`);
 
-                    axelMarkets.send(leaveEmbed);
-                    axel.send(townEmbed);
+                    axelMarkets.send({ embeds: [ leaveEmbed ] });
+                    axel.send({ embeds: [ townEmbed ] });
 
                 } else if(message.channel == axelForest){
 
@@ -145,8 +145,8 @@ module.exports = {
                     .setColor('#0fff93')
                     .setAuthor(`${message.member.nickname} has exited the forest into town.`);
 
-                    axelForest.send(leaveEmbed);
-                    axel.send(townEmbed);
+                    axelForest.send({ embeds: [ leaveEmbed ] });
+                    axel.send({ embeds: [ townEmbed ] });
 
                 }
 

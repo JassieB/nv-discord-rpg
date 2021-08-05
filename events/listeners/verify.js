@@ -5,56 +5,63 @@ module.exports = {
     description: '',
     callback: async (client, guild) => {
 
-        const chan = client.channels.cache.get('856103300415094844');
-        const msg = chan.messages.fetch('859840334355365900');
-        const emoji = ":Verify:867792825821954068";
-
+        // create function to recall after each reaction
         const watch = async () => {
 
-            msg.then(async (m) => {
-    
-                m.react(":Verify:867792825821954068")
-                let memberReact;
+            console.log('starting')
+
+            // fetch verification message
+            const chan = client.channels.cache.get('856103300415094844');
+            const message = chan.messages.fetch('859840334355365900').then(async (m) => {
+
                 const reactFilter = (reaction, user) => {
                     reaction.emoji.id === '867792825821954068';
                     memberReact = reaction.message.guild.member(user);
 
                     if(user == client.user){
                     } else {
-                        reaction.users.remove(user.id);
                         return ['867792825821954068'].includes(reaction.emoji.id);
                     }
                 }
-        
-                m.awaitReactions(reactFilter, { max: 1, time: 100000000, errors: 'time' })
-                .then(async (collected) => {
 
-                    const name = memberReact.user.username.toLowerCase();
-                    const strtchan = guild.channels.cache.find(channel => channel.name === `${name}-starting`);
+                const collector = m.createReactionCollector({ reactFilter, time: 1000000000, max: 1 });
 
-                    if(!strtchan && !memberReact.roles.cache.has('858273964480135218') && !memberReact.roles.cache.has('860116486637748264') && !memberReact.roles.cache.has('859640375932092467')){
-                        guild.channels.create(`${memberReact.user.username}-starting`).then(async channel => {
+                collector.on('collect', async (reaction, user) => {
+
+                    reaction.users.remove(user.id);
+
+                    const member = guild.members.cache.get(user.id);
+
+                    const startChannel = client.channels.cache.find(channel => channel.name === `${user.username.toLowerCase()}-starting`);
+
+                    if(!startChannel && !member.roles.cache.has('858273964480135218') && !member.roles.cache.has('860116486637748264') && !member.roles.cache.has('859640375932092467')){
+
+                        guild.channels.create(`${user.username.toLowerCase()}-starting`).then(async channel => {
                             await channel.setParent('867760786134925353');
-                        
-                            await channel.updateOverwrite(memberReact, {
+
+                            await channel.permissionOverwrites.edit(member, {
                                 "VIEW_CHANNEL": true,
                                 "SEND_MESSAGES": true,
                                 "READ_MESSAGE_HISTORY": true,
-                            });
-                        
-                            memberReact.roles.add('867761358296711218');
-                            channel.send(`**Welcome ${memberReact.user.username}!**\nOnce you are set to go, use \`^startgame\` to start your adventure!`)
+                            })
+
                         })
-                    }
 
-                    watch();
+                        watch();
 
-                }).catch(error => {
-                    watch();
+                    } else {
+                        watch();
+                    } 
+
                 })
             })
 
+            setTimeout(() => {
+                watch();
+            }, 1000000000)
+
         }
+
         watch();
     }
 }

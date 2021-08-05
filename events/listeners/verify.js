@@ -8,8 +8,6 @@ module.exports = {
         // create function to recall after each reaction
         const watch = async () => {
 
-            console.log('starting')
-
             // fetch verification message
             const chan = client.channels.cache.get('856103300415094844');
             const message = chan.messages.fetch('859840334355365900').then(async (m) => {
@@ -44,6 +42,8 @@ module.exports = {
                                 "SEND_MESSAGES": true,
                                 "READ_MESSAGE_HISTORY": true,
                             })
+
+                            await channel.send({ content: `**Welcome ${user.username}!**\nThis Server and Bot are still deep in the develpment stages. Things might break, be buggy or missing, but don't let that put you off! The developer works on it almost 24/7.\nWhen you're ready to get started, you can use \`^startgame\` to start the character creation process and enter the game.` })
 
                         })
 

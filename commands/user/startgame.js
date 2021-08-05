@@ -14,7 +14,7 @@ module.exports = {
         Settings.findOne({
             guildID: guild.id,
         }, 
-        (err, settings) => {
+        async (err, settings) => {
             if(err) return console.error(err);
 
             if(settings.commandsActive == true || message.member.id == '714070826248437770'){
@@ -50,6 +50,8 @@ module.exports = {
 
                             msg0.channel.awaitMessages({ max: 1, time: 10000, errors: ['time'] }).then(collected => {
                                 console.log(collected)
+                            }).catch((error) => {
+                                console.log(error);
                             })
 
                             /*const answerFilter = (m) => {

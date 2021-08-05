@@ -48,7 +48,11 @@ module.exports = {
                             await message.channel.send("It seems you are new here. I'm going to ask you some questions so we can get started on making your profile for this world. Please choose your answers carefully and DO NOT use anything offensive.\nYou will have 2 minutes per question.")
                             const msg0 = await message.channel.send("First off, what would you like your name to be?  (Full name)");
 
-                            const answerFilter = (m) => {
+                            msg0.channel.awaitMessages({ max: 1, time: 10000, errors: ['time'] }).then(collected => {
+                                console.log(collected)
+                            })
+
+                            /*const answerFilter = (m) => {
                                 if(m.author == client.user){
                                 } else {
                                     return m.author.id == message.author.id
@@ -63,11 +67,7 @@ module.exports = {
                                 let name = m.content;
 
                                 message.channel.send({ content: `${name}? All right then.` })
-                                await message.channel.send({ content: 'And how old would you like to be?\nYou will have to choose an age older than 15, since we don\'t want you to start too young, and younger than 35, seeing as how people age over time.' }).then(async () => {
-                                    
-                                    const collector2 = message.channel.createMessageCollector({ answerFilter, max: 1, time: 120000 });
-                                
-                                    collector2.on('collect', async (m) => {
+                                await message.channel.send({ content: 'And how old would you like to be?\nYou will have to choose an age older than 15, since we don\'t want you to start too young, and younger than 35, seeing as how people age over time.' })
 
                                         let age = m.content;
 
@@ -248,25 +248,14 @@ module.exports = {
                                         }, 120000)
 
                                     })
-                                })
 
                                 setTimeout(() => {
                                     message.channel.send({ content: 'You took too long to anser. Try again later.' });
-                                }, 120000)
-
-                            })
+                                }, 120000)*/
 
 
-                        
-        
-                                        
-                                        
-                
-                                        
-        
-                        
                         }
-                    })    
+                    })
                 })
             }
         })

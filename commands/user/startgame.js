@@ -48,205 +48,206 @@ module.exports = {
                             await message.channel.send("It seems you are new here. I'm going to ask you some questions so we can get started on making your profile for this world. Please choose your answers carefully and DO NOT use anything offensive.\nYou will have 2 minutes per question.")
                             const msg0 = await message.channel.send("First off, what would you like your name to be?  (Full name)");
 
-                            const answerFilter = (message, user) => {
-                                if(user == client.user){
+                            const answerFilter = (m) => {
+                                if(m.author == client.user){
                                 } else {
-                                    return [message]
+                                    return m.author.id == message.author.id
                                 }
 
                             }
 
                             const collector = message.channel.createMessageCollector({ answerFilter, max: 1, time: 120000 });
 
-                            collector.on('collect', async m => {
+                            collector.on('collect', async (m) => {
 
                                 let name = m.content;
 
                                 message.channel.send({ content: `${name}? All right then.` })
-                                message.channel.send({ content: 'And how old would you like to be?\nYou will have to choose an age older than 15, since we don\'t want you to start too young, and younger than 35, seeing as how people age over time.' })
-
-                                const collector2 = message.channel.createMessageCollector({ answerFilter, max: 1, time: 120000 });
+                                await message.channel.send({ content: 'And how old would you like to be?\nYou will have to choose an age older than 15, since we don\'t want you to start too young, and younger than 35, seeing as how people age over time.' }).then(async () => {
+                                    
+                                    const collector2 = message.channel.createMessageCollector({ answerFilter, max: 1, time: 120000 });
                                 
-                                collector2.on('collect', async m2 => {
+                                    collector2.on('collect', async (m) => {
 
-                                    let age = m2.content;
+                                        let age = m.content;
 
-                                    if(isNaN(age)){
-                                        m2.reply({ content: 'no' })
-                                    } else if(age > 15 || age < 35){
-                                        m2.reply({ content: 'Your age was either too young or too old. Start over and choose a valid age.' })
-                                    } else {
+                                        if(isNaN(age)){
+                                            m.reply({ content: 'no' })
+                                        } else if(age > 15 || age < 35){
+                                            m.reply({ content: 'Your age was either too young or too old. Start over and choose a valid age.' })
+                                        } else {
 
-                                        message.channel.send({ content: `${age} it is.` })
+                                            message.channel.send({ content: `${age} it is.` })
 
-                                        const msg = await channel.send({ embeds: [ embed ], components: [ row ] })
+                                            const msg = await channel.send({ embeds: [ embed ], components: [ row ] })
                 
-                                        // wait for interaction
-                                        const collector = msg.createMessageComponentCollector({ componentType: 'SELECT_MENU', time: 120000, max: 1 })
+                                            // wait for interaction
+                                            const collector = msg.createMessageComponentCollector({ componentType: 'SELECT_MENU', time: 120000, max: 1 })
                                         
-                                        let race;
+                                            let race;
         
-                                        collector.on('collect', interaction => {
+                                            collector.on('collect', interaction => {
         
-                                            if(interaction.values[0] === 'demi-human'){
+                                                if(interaction.values[0] === 'demi-human'){
         
-                                                race = 'Demi-Human';
+                                                    race = 'Demi-Human';
         
-                                                channel.send({ content: 'You are now a Demi-Human. Your character has been created and this channel will delete shortly.' })
-                                                setTimeout(() => {
-                                                    channel.delete()
-                                                }, 15000)
+                                                    channel.send({ content: 'You are now a Demi-Human. Your character has been created and this channel will delete shortly.' })
+                                                    setTimeout(() => {
+                                                        channel.delete()
+                                                    }, 15000)
         
-                                            } else if(interaction.values[0] === 'dwarf'){
+                                                } else if(interaction.values[0] === 'dwarf'){
         
-                                                race = 'Dwarf';
+                                                    race = 'Dwarf';
         
-                                                channel.send({ content: 'You are now a Dwarf. Your character has been created and this channel will delete shortly.' })
-                                                setTimeout(() => {
-                                                    channel.delete()
-                                                }, 15000)
+                                                    channel.send({ content: 'You are now a Dwarf. Your character has been created and this channel will delete shortly.' })
+                                                    setTimeout(() => {
+                                                        channel.delete()
+                                                    }, 15000)
         
-                                            } else if(interaction.values[0] === 'elf'){
+                                                } else if(interaction.values[0] === 'elf'){
         
-                                                race = 'Elf';
+                                                    race = 'Elf';
         
-                                                channel.send({ content: 'You are now an Elf. Your character has been created and this channel will delete shortly.' })
-                                                setTimeout(() => {
-                                                    channel.delete()
-                                                }, 15000)
+                                                    channel.send({ content: 'You are now an Elf. Your character has been created and this channel will delete shortly.' })
+                                                    setTimeout(() => {
+                                                        channel.delete()
+                                                    }, 15000)
         
-                                            } else if(interaction.values[0] === 'half-elf'){
+                                                } else if(interaction.values[0] === 'half-elf'){
         
-                                                race = 'Half-Elf';
+                                                    race = 'Half-Elf';
         
-                                                channel.send({ content: 'You are now a Half-Elf. Your character has been created and this channel will delete shortly.' })
-                                                setTimeout(() => {
-                                                    channel.delete()
-                                                }, 15000)
+                                                    channel.send({ content: 'You are now a Half-Elf. Your character has been created and this channel will delete shortly.' })
+                                                    setTimeout(() => {
+                                                        channel.delete()
+                                                    }, 15000)
         
-                                            } else if(interaction.values[0] === 'halfling'){
+                                                } else if(interaction.values[0] === 'halfling'){
         
-                                                race = 'Halfling';
+                                                    race = 'Halfling';
         
-                                                channel.send({ content: 'You are now a Halfling. Your character has been created and this channel will delete shortly.' })
-                                                setTimeout(() => {
-                                                    channel.delete()
-                                                }, 15000)
+                                                    channel.send({ content: 'You are now a Halfling. Your character has been created and this channel will delete shortly.' })
+                                                    setTimeout(() => {
+                                                        channel.delete()
+                                                    }, 15000)
         
-                                            } else if(interaction.values[0] === 'human'){
+                                                } else if(interaction.values[0] === 'human'){
         
-                                                race = 'Human';
+                                                    race = 'Human';
         
-                                                channel.send({ content: 'You are now a Human. Your character has been created and this channel will delete shortly.' })
-                                                setTimeout(() => {
-                                                    channel.delete()
-                                                }, 15000)
+                                                    channel.send({ content: 'You are now a Human. Your character has been created and this channel will delete shortly.' })
+                                                    setTimeout(() => {
+                                                        channel.delete()
+                                                    }, 15000)
         
-                                            } else if(interaction.values[0] === 'lycan'){
+                                                } else if(interaction.values[0] === 'lycan'){
         
-                                                race = 'Lycan';
+                                                    race = 'Lycan';
         
-                                                channel.send({ content: 'You are now a Lycan. Your character has been created and this channel will delete shortly.' })
-                                                setTimeout(() => {
-                                                    channel.delete()
-                                                }, 15000)
+                                                    channel.send({ content: 'You are now a Lycan. Your character has been created and this channel will delete shortly.' })
+                                                    setTimeout(() => {
+                                                        channel.delete()
+                                                    }, 15000)
         
+                                                }
+        
+                                            })
+        
+                                            setTimeout(() => {
+                                                channel.send({ content: 'You took too long to answer. Try again later.' });
+                                                return;
+                                            }, 120000)
+        
+                                            message.member.setNickname(name);
+        
+                                            if(race == 'Demi-Human'){
+                                                message.member.roles.add('867014446727954472');
+                                            } else if(race == 'Dwarf'){
+                                                message.member.roles.add('860115548896886794');
+                                            } else if(race == 'Halfling'){
+                                                message.member.roles.add('860114845479075840');
+                                            } else if(race == 'Elf'){
+                                                message.member.roles.add('860115328104792105');
+                                            } else if(race == 'Half-Elf'){
+                                                message.member.roles.add('860116035842867220');
+                                            } else if(race == 'Human'){
+                                                message.member.roles.add('860114710329688075');
+                                            } else if(race == 'Lycan'){
+                                                message.member.roles.add('860116856521490442');
                                             }
         
-                                        })
+                                            message.member.roles.add('858273964480135218');
         
+                                            message.channel.send(`Well then ${name} the ${race}, I will now randomly generate your stats and create your profile.`);
+                                            message.channel.send("**Generating stats...**");
+                                            let randStrength = Math.ceil(Math.random() * (18 - 11) + 2);
+                                            let randInteligence = Math.ceil(Math.random() * (18 - 11) + 2);
+                                            let randAgility = Math.ceil(Math.random() * (18 - 11) + 2);
+                                            let randSpeed = Math.ceil(Math.random() * (18 - 11) + 2);
+                                            let randDexterity = Math.ceil(Math.random() * (18 - 11) + 2);
+                                            let randCharisma = Math.ceil(Math.random() * (18 - 11) + 2);
+                                            let randMagic = Math.ceil(Math.random() * (18 - 11) + 2);
+                                            
+                                            message.channel.send("**Generating profile...**");
+                                            
+                                            // Generate Carry weight
+                                            let maxi;
+        
+                                            if(randStrength >= 9){
+                                                maxi = 17;
+                                            } else if(randStrength == 8){
+                                                maxi = 16;
+                                            } else if(randStrength == 7){
+                                                maxi = 15;
+                                            } else if(randStrength == 6){
+                                                maxi = 14;
+                                            } else if(randStrength <= 5){
+                                                maxi = 13
+                                            }
+        
+                                            //Create Character and Inventory
+                                            new charSchema({
+                                                guildID: guild.id,
+                                                userID: message.author.id,
+                                                username: message.member.user,
+                                                charName: name,
+                                                charAge: age,
+                                                charRace: race,
+                                                strength: randStrength,
+                                                intelligence: randInteligence,
+                                                agility: randAgility,
+                                                speed: randSpeed,
+                                                dexterity: randDexterity,
+                                                charisma: randCharisma,
+                                                magic: randMagic,
+                                            }).save();
+        
+                                            new invSchema({
+                                                guildID: guild.id,
+                                                userID: message.author.id,
+                                                username: message.member.user,
+                                                charName: name,
+                                                maxWeight: maxi,
+                                            }).save();
+        
+                                            const axel = client.channels.cache.get('860145504993411103');
+        
+                                            await axel.permissionOverwrites.edit(message.member, {
+                                                "VIEW_CHANNEL": true,
+                                                "SEND_MESSAGES": true,
+                                                "ADD_REACTIONS": true,
+                                                "READ_MESSAGE_HISTORY": true,
+                                            });
+
+                                        }
+
                                         setTimeout(() => {
-                                            channel.send({ content: 'You took too long to answer. Try again later.' });
-                                            return;
-                                        }, 120000)
-        
-                                        message.member.setNickname(name);
-        
-                                        if(race == 'Demi-Human'){
-                                            message.member.roles.add('867014446727954472');
-                                        } else if(race == 'Dwarf'){
-                                            message.member.roles.add('860115548896886794');
-                                        } else if(race == 'Halfling'){
-                                            message.member.roles.add('860114845479075840');
-                                        } else if(race == 'Elf'){
-                                            message.member.roles.add('860115328104792105');
-                                        } else if(race == 'Half-Elf'){
-                                            message.member.roles.add('860116035842867220');
-                                            } else if(race == 'Human'){
-                                            message.member.roles.add('860114710329688075');
-                                        } else if(race == 'Lycan'){
-                                            message.member.roles.add('860116856521490442');
-                                        }
-        
-                                        message.member.roles.add('858273964480135218');
-        
-                                        message.channel.send(`Well then ${name} the ${race}, I will now randomly generate your stats and create your profile.`);
-                                        message.channel.send("**Generating stats...**");
-                                        let randStrength = Math.ceil(Math.random() * (18 - 11) + 2);
-                                        let randInteligence = Math.ceil(Math.random() * (18 - 11) + 2);
-                                        let randAgility = Math.ceil(Math.random() * (18 - 11) + 2);
-                                        let randSpeed = Math.ceil(Math.random() * (18 - 11) + 2);
-                                        let randDexterity = Math.ceil(Math.random() * (18 - 11) + 2);
-                                        let randCharisma = Math.ceil(Math.random() * (18 - 11) + 2);
-                                        let randMagic = Math.ceil(Math.random() * (18 - 11) + 2);
-                                            
-                                        message.channel.send("**Generating profile...**");
-                                            
-                                        // Generate Carry weight
-                                        let maxi;
-        
-                                        if(randStrength >= 9){
-                                            maxi = 17;
-                                        } else if(randStrength == 8){
-                                            maxi = 16;
-                                        } else if(randStrength == 7){
-                                            maxi = 15;
-                                        } else if(randStrength == 6){
-                                            maxi = 14;
-                                        } else if(randStrength <= 5){
-                                            maxi = 13
-                                        }
-        
-                                        //Create Character and Inventory
-                                        new charSchema({
-                                            guildID: guild.id,
-                                            userID: message.author.id,
-                                            username: message.member.user,
-                                            charName: name,
-                                            charAge: age,
-                                            charRace: race,
-                                            strength: randStrength,
-                                            intelligence: randInteligence,
-                                            agility: randAgility,
-                                            speed: randSpeed,
-                                            dexterity: randDexterity,
-                                            charisma: randCharisma,
-                                            magic: randMagic,
-                                        }).save();
-        
-                                        new invSchema({
-                                            guildID: guild.id,
-                                            userID: message.author.id,
-                                            username: message.member.user,
-                                            charName: name,
-                                            maxWeight: maxi,
-                                        }).save();
-        
-                                        const axel = client.channels.cache.get('860145504993411103');
-        
-                                        await axel.permissionOverwrites.edit(message.member, {
-                                            "VIEW_CHANNEL": true,
-                                            "SEND_MESSAGES": true,
-                                            "ADD_REACTIONS": true,
-                                            "READ_MESSAGE_HISTORY": true,
-                                        });
-
-                                    }
-
-                                    setTimeout(() => {
                                         message.channel.send({ content: 'You took too long to anser. Try again later.' });
-                                    }, 120000)
+                                        }, 120000)
 
+                                    })
                                 })
 
                                 setTimeout(() => {

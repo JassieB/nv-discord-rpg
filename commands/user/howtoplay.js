@@ -122,9 +122,11 @@ module.exports = {
                     switch(interaction.value){
                         
                         case 'test-list2':
-                            return current = tradeEmbeds;
+                            current = tradeEmbeds;
+                            return m.edit({ embeds: [ current[0] ] })
                         case 'test-list':
-                            return current = guildEmbeds;
+                            current = guildEmbeds;
+                            return m.edit({ embeds: [ current[0] ] })
 
                     }
 

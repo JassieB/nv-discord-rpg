@@ -62,23 +62,13 @@ module.exports = {
                     .setLabel("4"),
         )
 
-        tradeEmbeds = [
-            embed2,
-            embed4
-        ];
-
-        guildEmbeds = [
-            embed3,
-            embed5
-        ];
-
-        let current;
+        let current = [];
 
         let page = 0;
 
-        current = mainpage;
+        current.push(mainpage);
 
-        message.channel.send({ embeds: [ current ], components: [row1, row2] }).then(async (m) => {
+        message.channel.send({ embeds: [ current[0] ], components: [row1, row2] }).then(async (m) => {
 
             const filter = async (interaction) => {
 
@@ -120,7 +110,9 @@ module.exports = {
                 } else if (interaction.isSelectMenu()) {
                     
                     if(interaction.value == 'test-list'){
-                        current = tradeEmbeds;
+                        current.push(embed2);
+                        current.push(embed3);
+                        current.shift();
                         m.edit({ embeds: [ current[0] ] })
                     } else if(interaction.value == 'test-list2'){
                         current = guildEmbeds;

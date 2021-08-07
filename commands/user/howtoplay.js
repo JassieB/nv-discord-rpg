@@ -121,10 +121,10 @@ module.exports = {
                     
                     if(interaction.value == 'test-list'){
                         current = tradeEmbeds;
-                        return m.edit({ embeds: [ current[0] ] })
+                        m.edit({ embeds: [ current[0] ] })
                     } else if(interaction.value == 'test-list2'){
                         current = guildEmbeds;
-                        return m.edit({ embeds: [ current[0] ] })
+                        m.edit({ embeds: [ current[0] ] })
 
                     }
 

@@ -119,14 +119,12 @@ module.exports = {
 
                 } else if (interaction.isSelectMenu()) {
                     
-                    switch(interaction.value){
-                        
-                        case 'test-list2':
-                            current = tradeEmbeds;
-                            return m.edit({ embeds: [ current[0] ] })
-                        case 'test-list':
-                            current = guildEmbeds;
-                            return m.edit({ embeds: [ current[0] ] })
+                    if(interaction.value == 'test-list'){
+                        current = tradeEmbeds;
+                        return m.edit({ embeds: [ current[0] ] })
+                    } else if(interaction.value == 'test-list2'){
+                        current = guildEmbeds;
+                        return m.edit({ embeds: [ current[0] ] })
 
                     }
 

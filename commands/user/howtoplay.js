@@ -72,12 +72,13 @@ module.exports = {
             embed5
         ];
 
-
-        let embeds = [];
+        let current;
 
         let page = 0;
 
-        message.channel.send({ embeds: [ mainpage ], components: [row1, row2] }).then(async (m) => {
+        current = mainpage;
+
+        message.channel.send({ embeds: [ current ], components: [row1, row2] }).then(async (m) => {
 
             const filter = async (interaction) => {
 
@@ -93,7 +94,11 @@ module.exports = {
 
             collector.on('collect', async (interaction, user) => {
 
-                interaction.deferUpdate()
+                interaction.deferUpdate();
+
+                if(current == mainpage){
+                    return
+                }
 
                 if(interaction.isButton()){
 
@@ -101,14 +106,14 @@ module.exports = {
                     
                         case '1':
                             page = 0;
-                            return m.edit({ embeds: [embeds[page]] });
+                            return m.edit({ embeds: [current[page]] });
                         case '2':
-                            return m.edit({ embeds: [embeds[--page]] });
+                            return m.edit({ embeds: [current[--page]] });
                         case '3':
-                            return m.edit({ embeds: [embeds[++page]] });
+                            return m.edit({ embeds: [current[++page]] });
                         case '4':
                             page = embeds.length - 1;
-                            return m.edit({ embeds: [embeds[page]] });
+                            return m.edit({ embeds: [current[page]] });
 
                     }
 
@@ -117,9 +122,9 @@ module.exports = {
                     switch(interaction.value){
                         
                         case 'test-list2':
-                            return embeds = tradeEmbeds;
+                            return current = tradeEmbeds;
                         case 'test-list':
-                            return embeds = guildEmbeds;
+                            return current = guildEmbeds;
 
                     }
 

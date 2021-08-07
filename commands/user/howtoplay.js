@@ -92,7 +92,7 @@ module.exports = {
 
             const collector = m.channel.createMessageComponentCollector({ filter, idle: 20000 })
 
-            collector.on('collect', async (interaction, user) => {
+            collector.on('collect', (interaction, user) => {
 
                 interaction.deferUpdate();
 

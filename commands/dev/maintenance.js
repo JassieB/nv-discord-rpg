@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const Settings = require('../../models/guildsettings');
+const startTime = require('../../events/constant/timeCycle');
+const startSpawn = require('../../events/constant/timeCycle');
 
 module.exports = {
     commands: ['maintenance'],
@@ -44,6 +46,9 @@ module.exports = {
                 settings.logsActive = false;
                 settings.spawningActive = false;
                 settings.save()
+
+                startTime();
+                startSpawn();
 
                 bot.roles.add('867760855109992468');
                 logChannel.send({ embeds: [ mOn ] });

@@ -14,7 +14,6 @@ module.exports = {
 
                 const reactFilter = (reaction, user) => {
                     reaction.emoji.id === '867792825821954068';
-                    memberReact = reaction.message.guild.member(user);
 
                     if(user == client.user){
                     } else {

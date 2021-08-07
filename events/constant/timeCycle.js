@@ -41,7 +41,7 @@ module.exports = {
 
                         let chans = [];
 
-                        client.channels.cache.forEach(channel => {
+                        client.channels.cache.forEach(async channel => {
                             if(channel.name.startsWith('🌆') || channel.name.startsWith('🛡') || channel.name.startsWith('🔨') || channel.name.startsWith('💰') || channel.name.startsWith('🌳')){
 
                                 chans.push(channel.id);
@@ -72,8 +72,6 @@ module.exports = {
                         getChannels(nightEmbed, nightImg1);
 
                         let interval4 = setInterval(clearMinute, 60 * 1000);
-
-                        setTimeout(setDays, 50 * 60 * 1000);
 
                         setTimeout(() => {
                             clearInterval(interval4)

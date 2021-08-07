@@ -96,9 +96,9 @@ module.exports = {
 
                 interaction.deferUpdate();
 
-                if(current == mainpage){
-                    return
-                }
+                //if(current == mainpage){
+                //    return
+                //}
 
                 if(interaction.isButton()){
 

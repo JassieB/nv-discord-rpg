@@ -114,9 +114,11 @@ module.exports = {
                         current.push(embed3);
                         current.shift();
                         m.edit({ embeds: [ current[0] ] })
-                    } else if(interaction.values[1] == 'test-list2'){
+                    } else if(interaction.values[0] == 'test-list2'){
                         current.push(embed4);
                         current.push(embed5);
+                        current.shift();
+                        current.shift();
                         m.edit({ embeds: [ current[0] ] })
 
                     }

@@ -82,7 +82,7 @@ module.exports = {
 
             const collector = m.channel.createMessageComponentCollector({ filter, idle: 20000 })
 
-            collector.on('collect', (interaction, user) => {
+            collector.on('collect', async (interaction, user) => {
 
                 interaction.deferUpdate();
 
@@ -102,20 +102,21 @@ module.exports = {
                         case '3':
                             return m.edit({ embeds: [current[++page]] });
                         case '4':
-                            page = embeds.length - 1;
+                            page = current.length - 1;
                             return m.edit({ embeds: [current[page]] });
 
                     }
 
                 } else if (interaction.isSelectMenu()) {
                     
-                    if(interaction.value == 'test-list'){
+                    if(interaction.values[0] == 'test-list'){
                         current.push(embed2);
                         current.push(embed3);
                         current.shift();
                         m.edit({ embeds: [ current[0] ] })
-                    } else if(interaction.value == 'test-list2'){
-                        current = guildEmbeds;
+                    } else if(interaction.values[1] == 'test-list2'){
+                        current.push(embed4);
+                        current.push(embed5);
                         m.edit({ embeds: [ current[0] ] })
 
                     }

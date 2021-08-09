@@ -1,7 +1,7 @@
 {
     "name": "nv-rpg-bot",
     "description": "a discord rpg bot",
-    "authors": "Jas",
+    "authors": "JasBosua",
     "version": "0.0.5",
     "main": "bot.js",
     "dependencies": {

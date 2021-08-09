@@ -121,8 +121,8 @@ module.exports = {
                             if(page != current.length - 1){
                                 return m.edit({ embeds: [current[++page]] });
                             } else {
-                                btnNext.enabled = false;
-                                btnLast.enabled = false;
+                                btnNext.disabled = true;
+                                btnLast.disabled = true;
                             }    
                         case '4':
                             page = current.length - 1;

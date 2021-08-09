@@ -7,24 +7,24 @@ module.exports = {
 
         // Embeds
         let mainpage = new Discord.MessageEmbed()
-            .setTitle("1")
-            .setDescription("lol")
+        .setTitle("1")
+        .setDescription("lol")
         
         let embed2 = new Discord.MessageEmbed()
-            .setTitle("2")
+         .setTitle("2")
         .setDescription("lol")
         
         let embed3 = new Discord.MessageEmbed()
-            .setTitle("3")
+        .setTitle("3")
         .setDescription("lol")
         
         let embed4 = new Discord.MessageEmbed()
-            .setTitle("4")
+        .setTitle("4")
         .setDescription("lol")
         
         let embed5 = new Discord.MessageEmbed()
-            .setTitle("5")
-            .setDescription("lol")
+        .setTitle("5")
+        .setDescription("lol")
         
         // Butttons
         const btnFirst = new Discord.MessageButton()
@@ -102,10 +102,6 @@ module.exports = {
 
                 interaction.deferUpdate();
 
-                //if(current == mainpage){
-                //    return
-                //}
-
                 if(interaction.isButton()){
 
                     switch (interaction.customId) {
@@ -114,16 +110,9 @@ module.exports = {
                             page = 0;
                             return m.edit({ embeds: [current[page]] });
                         case '2':
-                            if(page != 0){
                                 return m.edit({ embeds: [current[--page]] });
-                            }
                         case '3':
-                            if(page != current.length - 1){
-                                return m.edit({ embeds: [current[++page]] });
-                            } else {
-                                btnNext.setDisabled(true)
-                                btnLast.setDisabled(true)
-                            }    
+                                return m.edit({ embeds: [current[++page]] });  
                         case '4':
                             page = current.length - 1;
                             return m.edit({ embeds: [current[page]] });

@@ -5,6 +5,7 @@ module.exports = {
     description: '',
     callback: async (message, client, guild, arguments) => {
 
+        // Embeds
         let mainpage = new Discord.MessageEmbed()
             .setTitle("1")
             .setDescription("lol")
@@ -23,8 +24,34 @@ module.exports = {
         
         let embed5 = new Discord.MessageEmbed()
             .setTitle("5")
-        .setDescription("lol")
+            .setDescription("lol")
         
+        // Butttons
+        const btnFirst = new Discord.MessageButton()
+        .setStyle("PRIMARY")
+        .setCustomId("1")
+        .setLabel("⏪")
+        
+        
+        const btnPrevious = new Discord.MessageButton()
+        .setStyle("PRIMARY")
+        .setCustomId("2")
+        .setLabel("◀️")
+                
+        const btnNext = new Discord.MessageButton()
+        .setStyle("PRIMARY")
+        .setCustomId("3")
+        .setLabel("▶️")
+        
+        const btnLast = new Discord.MessageButton()
+        .setStyle("PRIMARY")
+        .setCustomId("4")
+        .setLabel("⏩")
+        
+        // Select Menus
+
+
+        // Row 1
         const row1 = new Discord.MessageActionRow()
             .addComponents(
             new Discord.MessageSelectMenu()
@@ -42,24 +69,13 @@ module.exports = {
                 )
         )
         
+        // Row 2
         const row2 = new Discord.MessageActionRow()
             .addComponents(
-                new Discord.MessageButton()
-                    .setStyle("PRIMARY")
-                    .setCustomId("1")
-                    .setLabel("1"),
-                new Discord.MessageButton()
-                    .setStyle("PRIMARY")
-                    .setCustomId("2")
-                    .setLabel("2"),
-                new Discord.MessageButton()
-                    .setStyle("PRIMARY")
-                    .setCustomId("3")
-                    .setLabel("3"),
-                new Discord.MessageButton()
-                    .setStyle("PRIMARY")
-                    .setCustomId("4")
-                    .setLabel("4"),
+                btnFirst,
+                btnPrevious,
+                btnNext,
+                btnLast,
         )
 
         let current = [];
@@ -102,7 +118,11 @@ module.exports = {
                                 return m.edit({ embeds: [current[--page]] });
                             }
                         case '3':
-                            if(page != current.length -1){
+                            if (page != current.length - 1) {
+                                if ((page + 1) == (current.length - 1)) {
+                                    btnNext.setDisabled(true);
+                                    btnLast.setDisabled(true);
+                                }
                                 return m.edit({ embeds: [current[++page]] });
                             }
                         case '4':

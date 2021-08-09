@@ -118,13 +118,12 @@ module.exports = {
                                 return m.edit({ embeds: [current[--page]] });
                             }
                         case '3':
-                            if (page != current.length - 1) {
-                                if ((page + 1) == (current.length - 1)) {
-                                    btnNext.enabled = false;
-                                    btnLast.enabled = false;
-                                }
+                            if(page != current.length - 1){
                                 return m.edit({ embeds: [current[++page]] });
-                            }
+                            } else {
+                                btnNext.enabled = false;
+                                btnLast.enabled = false;
+                            }    
                         case '4':
                             page = current.length - 1;
                             return m.edit({ embeds: [current[page]] });

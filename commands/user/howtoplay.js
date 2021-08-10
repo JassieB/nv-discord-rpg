@@ -106,14 +106,14 @@ module.exports = {
 
 					case '1':
 						page = 0;
-						return m.edit({ embeds: [current[page]] });
+						return msg.edit({ embeds: [current[page]] });
 					case '2':
-						return m.edit({ embeds: [current[--page]] });
+						return msg.edit({ embeds: [current[--page]] });
 					case '3':
-						return m.edit({ embeds: [current[++page]] });
+						return msg.edit({ embeds: [current[++page]] });
 					case '4':
 						page = current.length - 1;
-						return m.edit({ embeds: [current[page]] });
+						return msg.edit({ embeds: [current[page]] });
 
 				}
 

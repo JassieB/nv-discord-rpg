@@ -9,11 +9,11 @@ module.exports = {
 			.setTitle('1')
 			.setDescription('lol');
 
-		let embed2 = new Discord.MessageEmbed()
+		let characterMainpage = new Discord.MessageEmbed()
 			.setTitle('2')
 			.setDescription('lol');
 
-		let embed3 = new Discord.MessageEmbed()
+		let characterExplanation = new Discord.MessageEmbed()
 			.setTitle('3')
 			.setDescription('lol');
 
@@ -24,6 +24,12 @@ module.exports = {
 		let embed5 = new Discord.MessageEmbed()
 			.setTitle('5')
 			.setDescription('lol');
+
+		// Embed grouping
+		let characterEmbeds = [
+			characterMainpage,
+			characterExplanation
+		]
 
 		// Butttons
 		const btnFirst = new Discord.MessageButton()
@@ -56,11 +62,11 @@ module.exports = {
 		const row1 = new Discord.MessageActionRow().addComponents(
 			new Discord.MessageSelectMenu()
 				.setCustomId('htp-list')
-				.setPlaceholder('Test')
+				.setPlaceholder('Categories')
 				.addOptions(
 					{
-						label: 'Test list',
-						value: 'test-list'
+						label: 'Characters',
+						value: 'characters'
 					},
 					{
 						label: 'Test list 2',
@@ -93,7 +99,7 @@ module.exports = {
 				}
 			};
 
-			const collector = m.channel.createMessageComponentCollector({ filter, idle: 20000 });
+			const collector = m.createInteractionCollector({ filter, idle: 20000 });
 
 			collector.on('collect', async (interaction, user) => {
 				interaction.deferUpdate();
@@ -119,21 +125,12 @@ module.exports = {
 
 					if (interaction.values[0] == 'test-list') {
 
-						current.push(embed2);
-						current.push(embed3);
-						current.shift();
-						btnFirst.setDisabled(false)
-						btnPrevious.setDisabled(false)
-						btnNext.setDisabled(false)
-						btnLast.setDisabled(false)
+						current = characterEmbeds;
 						m.edit({ embeds: [current[0]] });
 
 					} else if (interaction.values[0] == 'test-list2') {
 
-						current.push(embed4);
-						current.push(embed5);
-						current.shift();
-						current.shift();
+						current
 						m.edit({ embeds: [current[0]] });
 
 					}

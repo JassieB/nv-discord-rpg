@@ -119,7 +119,7 @@ module.exports = {
 
 			} else if (interaction.isSelectMenu()) {
 
-				if (interaction.values[0] == 'character') {
+				if (interaction.values[0] == 'characters') {
 
 					current = characterEmbeds;
 					m.edit({ embeds: [current[0]] });

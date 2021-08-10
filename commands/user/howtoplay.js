@@ -81,6 +81,9 @@ module.exports = {
 			);
 
 		let current;
+		console.log(characterEmbeds)
+		current = characterEmbeds;
+		console.log(current)
 
 		let page = 0;
 

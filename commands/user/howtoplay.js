@@ -95,7 +95,7 @@ module.exports = {
 				}
 			};
 
-			const collector = m.createInteractiCollector({ filter, idle: 20000 });
+			const collector = m.createMessageComponentCollector({ filter, idle: 20000 });
 
 			collector.on('collect', async (interaction, user) => {
 				interaction.deferUpdate();

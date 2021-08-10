@@ -84,9 +84,9 @@ module.exports = {
 
 		let page = 0;
 
-		current.push(mainpage);
+		current = mainpage;
 
-		const msg = await message.channel.send({ embeds: [current[0]], components: [row1, row2] })
+		const msg = await message.channel.send({ embeds: [current], components: [row1, row2] })
 		const filter = async (interaction) => {
 			if (interaction.user.id === message.author.id) {
 				return true;

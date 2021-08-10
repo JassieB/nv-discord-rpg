@@ -31,12 +31,13 @@ module.exports = {
 
         collector.on('collect', (interaction, user) => {
 
-            if (interaction.customId === '2') {
-                console.log('test')
-                btn2.disabled = false;
-            } else if (interaction.customId === '1') {
-                console.log('test')
-                btn2.setDisabled(true);
+            switch (interaction.customId) {
+
+                case '1':
+                    return btn2.setDisabled(false);
+                case '2':
+                    return btn2.setDisabled(true);
+
             }
 
         })

@@ -122,12 +122,12 @@ module.exports = {
 				if (interaction.values[0] == 'characters') {
 
 					current = characterEmbeds;
-					m.edit({ embeds: [current[0]] });
+					msg.edit({ embeds: [current[0]] });
 
 				} else if (interaction.values[0] == 'test-list2') {
 
 					current
-					m.edit({ embeds: [current[0]] });
+					msg.edit({ embeds: [current[0]] });
 
 				}
 

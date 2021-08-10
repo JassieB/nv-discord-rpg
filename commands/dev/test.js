@@ -25,7 +25,7 @@ module.exports = {
                 btn2,
             )
 
-        const msg = await message.channel.send({ constent: 'Testing buttons', components: [row] });
+        const msg = await message.channel.send({ content: 'Testing buttons', components: [row] });
 
         const collector = msg.createMessageComponentCollector({ idle: 20000 });
 

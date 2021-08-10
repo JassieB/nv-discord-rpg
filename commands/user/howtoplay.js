@@ -36,25 +36,21 @@ module.exports = {
 			.setStyle('PRIMARY')
 			.setCustomId('1')
 			.setLabel('⏪')
-			.setDisabled();
 
 		const btnPrevious = new Discord.MessageButton()
 			.setStyle('PRIMARY')
 			.setCustomId('2')
 			.setLabel('◀️')
-			.setDisabled();
 
 		const btnNext = new Discord.MessageButton()
 			.setStyle('PRIMARY')
 			.setCustomId('3')
 			.setLabel('▶️')
-			.setDisabled();
 
 		const btnLast = new Discord.MessageButton()
 			.setStyle('PRIMARY')
 			.setCustomId('4')
 			.setLabel('⏩')
-			.setDisabled();
 
 		// Select Menus
 
@@ -99,7 +95,7 @@ module.exports = {
 				}
 			};
 
-			const collector = m.createInteractionCollector({ filter, idle: 20000 });
+			const collector = m.createInteractiCollector({ filter, idle: 20000 });
 
 			collector.on('collect', async (interaction, user) => {
 				interaction.deferUpdate();

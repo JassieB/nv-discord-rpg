@@ -5,7 +5,7 @@
     "version": "0.0.5",
     "main": "bot.js",
     "dependencies": {
-        "discord.js": "^13.0.0-dev.t1627940041.15aea68",
+        "discord.js": "^13.0.1",
         "mongoose": "^5.13.5",
         "nodemon": "^2.0.12"
     }

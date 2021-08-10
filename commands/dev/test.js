@@ -33,10 +33,10 @@ module.exports = {
 
             if (interaction.customId === '2') {
                 console.log('test')
-                btn2.setDisabled(true);
+                btn2.disabled = false;
             } else if (interaction.customId === '1') {
                 console.log('test')
-                btn2.setDisabled(false);
+                btn2.setDisabled(true);
             }
 
         })

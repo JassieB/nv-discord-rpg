@@ -30,7 +30,13 @@ module.exports = {
         const collector = msg.createMessageComponentCollector({ idle: 20000 });
 
         collector.on('collect', (interaction, user) => {
-            console.log(interaction, user)
+
+            if (interaction.customId == '2') {
+                btn2.setDisabled(true);
+            } else if (interaction.customId == '1') {
+                btn2.setDisabled(false);
+            }
+
         })
 
     }

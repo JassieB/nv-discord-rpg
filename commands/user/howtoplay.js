@@ -70,7 +70,13 @@ module.exports = {
 		);
 
 		// Row 2
-		const row2 = new Discord.MessageActionRow().addComponents(btnFirst, btnPrevious, btnNext, btnLast);
+		const row2 = new Discord.MessageActionRow()
+			.addComponents(
+				btnFirst,
+				btnPrevious,
+				btnNext,
+				btnLast
+			);
 
 		let current = [];
 

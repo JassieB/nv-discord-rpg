@@ -32,9 +32,11 @@ module.exports = {
         collector.on('collect', (interaction, user) => {
 
             if (interaction.customId === '2') {
-                btn2.setDisabled(true);
+                console.log('test')
+                btn2.setDisabled(true).catch(error => console.log(error))
             } else if (interaction.customId === '1') {
-                btn2.setDisabled(false);
+                console.log('test')
+                btn2.setDisabled(false).catch(error => console.log(error))
             }
 
         })

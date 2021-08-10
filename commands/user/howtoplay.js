@@ -122,10 +122,10 @@ module.exports = {
 						current.push(embed2);
 						current.push(embed3);
 						current.shift();
-						btnFirst.setDisabled(false)
-						btnPrevious.setDisabled(false)
-						btnNext.setDisabled(false)
-						btnLast.setDisabled(false)
+						btnFirst.setEnabled()
+						btnPrevious.setEnabled()
+						btnNext.setEnabled()
+						btnLast.setEnabled()
 						m.edit({ embeds: [current[0]] });
 
 					} else if (interaction.values[0] == 'test-list2') {

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-
+const path = require('path');
+const fs = require('fs');
 
 module.exports = {
     commands: ['testbuttons'],
@@ -8,6 +9,27 @@ module.exports = {
 
         if (!message.member.user.id == '714070826248437770') {
         };
+
+        let DBFolder = '../../Database/Testingcount'
+
+        fs.writeFileSync(DBFolder + '/testbuttons', countJSON);
+
+        fs.readdir(DBFolder, async function (err, files) {
+            if (err) {
+                console.error(err);
+                process.exit(1);
+            }
+
+            files.forEach(async function (file, index) {
+                if (file.name.startsWith(`testbuttons`)) {
+                    console.log(file)
+                } else {
+                    let count = { "count": 1 };
+                    let countJSON = JSON.stringify(count);
+                }
+            })
+
+        })
 
         const btn1 = new Discord.MessageButton()
             .setStyle("PRIMARY")
@@ -30,6 +52,8 @@ module.exports = {
         const collector = msg.createMessageComponentCollector({ idle: 20000 });
 
         collector.on('collect', (interaction, user) => {
+
+            console.log(user)
 
             switch (interaction.customId) {
 

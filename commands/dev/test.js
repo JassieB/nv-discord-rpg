@@ -10,9 +10,7 @@ module.exports = {
         if (!message.member.user.id == '714070826248437770') {
         };
 
-        let DBFolder = '../../Database/Testingcount'
-
-        fs.writeFileSync(DBFolder + '/testbuttons', countJSON);
+        let DBFolder = './Database/Testingcount'
 
         fs.readdir(DBFolder, async function (err, files) {
             if (err) {
@@ -21,11 +19,17 @@ module.exports = {
             }
 
             files.forEach(async function (file, index) {
-                if (file.name.startsWith(`testbuttons`)) {
+                if (file.startsWith(`testbuttons`)) {
                     console.log(file)
                 } else {
                     let count = { "count": 1 };
                     let countJSON = JSON.stringify(count);
+
+                    console.log('before')
+
+                    fs.writeFileSync(DBFolder + '/testbuttons', countJSON);
+
+                    console.log('after')
                 }
             })
 

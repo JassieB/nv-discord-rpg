@@ -106,7 +106,11 @@ module.exports = {
 
 					case '1':
 						page = 0;
-						return msg.edit({ embeds: [current[page]] });
+						btnFirst.setDisabled(true)
+						btnPrevious.setDisabled(true)
+						btnNext.setDisabled(false)
+						btnLast.setDisabled(false)
+						return msg.edit({ embeds: [current[page]], components: [row1, row2] });
 					case '2':
 						return msg.edit({ embeds: [current[--page]] });
 					case '3':

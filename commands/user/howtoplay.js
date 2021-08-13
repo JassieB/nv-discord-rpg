@@ -1,62 +1,48 @@
 const Discord = require('discord.js');
+const pagination = require('../../functions/pagination');
 
 module.exports = {
 	commands: ['howtoplay'],
 	description: '',
 	callback: async (message, client, guild, arguments) => {
-		// Embeds
-		let mainpage = new Discord.MessageEmbed()
-			.setTitle('1')
-			.setDescription('lol');
 
-		let characterMainpage = new Discord.MessageEmbed()
-			.setTitle('2')
-			.setDescription('lol');
+		try {
 
-		let characterExplanation = new Discord.MessageEmbed()
-			.setTitle('3')
-			.setDescription('lol');
+			// Embeds
+			let mainpage = new Discord.MessageEmbed()
+				.setTitle('1')
+				.setDescription('lol');
 
-		let embed4 = new Discord.MessageEmbed()
-			.setTitle('4')
-			.setDescription('lol');
+			let characterMainpage = new Discord.MessageEmbed()
+				.setTitle('2')
+				.setDescription('lol');
 
-		let embed5 = new Discord.MessageEmbed()
-			.setTitle('5')
-			.setDescription('lol');
+			let characterExplanation = new Discord.MessageEmbed()
+				.setTitle('3')
+				.setDescription('lol');
 
-		// Embed grouping
-		let characterEmbeds = [
-			characterMainpage,
-			characterExplanation
-		]
+			let embed4 = new Discord.MessageEmbed()
+				.setTitle('4')
+				.setDescription('lol');
 
-		// Butttons
-		const btnFirst = new Discord.MessageButton()
-			.setStyle('PRIMARY')
-			.setCustomId('1')
-			.setLabel('⏪')
+			let embed5 = new Discord.MessageEmbed()
+				.setTitle('5')
+				.setDescription('lol');
 
-		const btnPrevious = new Discord.MessageButton()
-			.setStyle('PRIMARY')
-			.setCustomId('2')
-			.setLabel('◀️')
+			// Embed grouping
+			let characterEmbeds = [
+				characterMainpage,
+				characterExplanation
+			]
 
-		const btnNext = new Discord.MessageButton()
-			.setStyle('PRIMARY')
-			.setCustomId('3')
-			.setLabel('▶️')
+			let guildEmbeds = [
+				embed4,
+				embed5,
+			]
 
-		const btnLast = new Discord.MessageButton()
-			.setStyle('PRIMARY')
-			.setCustomId('4')
-			.setLabel('⏩')
 
-		// Select Menus
-
-		// Row 1
-		const row1 = new Discord.MessageActionRow().addComponents(
-			new Discord.MessageSelectMenu()
+			// Select Menus
+			const typeSelect = new Discord.MessageSelectMenu()
 				.setCustomId('htp-list')
 				.setPlaceholder('Categories')
 				.addOptions(
@@ -69,73 +55,84 @@ module.exports = {
 						value: 'test-list2'
 					}
 				)
-		);
 
-		// Row 2
-		const row2 = new Discord.MessageActionRow()
-			.addComponents(
-				btnFirst,
-				btnPrevious,
-				btnNext,
-				btnLast
-			);
+			let current;
 
-		let current;
+			let page = 0;
 
-		let page = 0;
+			current = [
+				mainpage
+			];
 
-		current = mainpage;
+			let nullMsg = null;
 
-		const msg = await message.channel.send({ embeds: [current], components: [row1, row2] })
-		const filter = async (interaction) => {
-			if (interaction.user.id === message.author.id) {
-				return true;
-			} else {
-				interaction.followUp({ content: "This message isn't for you" });
-			}
-		};
+			const msg = await pagination(null, message.channel, current, typeSelect, page);
 
-		const collector = msg.createMessageComponentCollector({ filter, idle: 20000 });
+			const filter = (interaction) => {
+				if (interaction.user.id != message.member.user.id) {
+					interaction.deferUpdate();
+				} else {
+					return interaction;
+				}
+			};
 
-		collector.on('collect', async (interaction, user) => {
-			interaction.deferUpdate();
+			const collector = msg.createMessageComponentCollector({ filter, idle: 20000 });
 
-			if (interaction.isButton()) {
+			collector.on('collect', async (interaction) => {
+				interaction.deferUpdate();
 
-				switch (interaction.customId) {
+				if (interaction.isButton()) {
 
-					case '1':
-						page = 0;
-						btnFirst.setDisabled(true)
-						btnPrevious.setDisabled(true)
-						btnNext.setDisabled(false)
-						btnLast.setDisabled(false)
-						return msg.edit({ embeds: [current[page]], components: [row1, row2] });
-					case '2':
-						return msg.edit({ embeds: [current[--page]] });
-					case '3':
-						return msg.edit({ embeds: [current[++page]] });
-					case '4':
-						page = current.length - 1;
-						return msg.edit({ embeds: [current[page]] });
+					switch (interaction.customId) {
+
+						case '1':
+							page = 0;
+							return pagination(msg, message.channel, message.member, current, typeSelect, page);
+						case '2':
+							--page;
+							return pagination(msg, message.channel, message.member, current, typeSelect, page);
+						case '3':
+							++page;
+							return pagination(msg, message.channel, message.member, current, typeSelect, page);
+						case '4':
+							page = current.length - 1;
+							return pagination(msg, message.channel, message.member, current, typeSelect, page);
+
+					}
+
+				} else if (interaction.isSelectMenu()) {
+
+					if (interaction.values[0] == 'characters') {
+
+						current = characterEmbeds;
+						pagination(msg, message.channel, message.member, current, typeSelect, page)
+
+					} else if (interaction.values[0] == 'test-list2') {
+
+						current = guildEmbeds;
+						pagination(msg, message.channel, message.member, current, typeSelect, page)
+
+					}
 
 				}
 
-			} else if (interaction.isSelectMenu()) {
+			});
 
-				if (interaction.values[0] == 'characters') {
+			collector.on('end', async (interaction) => {
 
-					current = characterEmbeds;
-					msg.edit({ embeds: [current[0]] });
+				msg.delete();
 
-				} else if (interaction.values[0] == 'test-list2') {
+			})
 
-					current
-					msg.edit({ embeds: [current[0]] });
+		} catch (err) {
 
-				}
 
-			}
-		});
+
+		}
+
+
+
+
 	}
+
 };

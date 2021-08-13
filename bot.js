@@ -16,8 +16,8 @@ const mongo = require('./mongo.js');
 
 // Collections
 
-client.on('ready', () => {
-    mongo();
+client.on('ready', async () => {
+    await mongo();
 
     const baseFile = 'command-base.js';
     const commandBase = require(`./commands/${baseFile}`);
@@ -51,8 +51,8 @@ client.on('ready', () => {
         };
     };
 
-    readEvents('events');
-    readCommands('commands');
+    await readEvents('events');
+    await readCommands('commands');
 
     commandBase.listen(client);
 

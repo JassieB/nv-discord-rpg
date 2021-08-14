@@ -1,4 +1,4 @@
-const { prefix } = require('../config.json');
+const prefix = process.env.PREFIX;
 
 const allCommands = {}
 
@@ -8,13 +8,13 @@ module.exports = (commandOptions) => {
     } = commandOptions;
 
     // Ensure the command and aliases are in an array
-    if(typeof commands === 'string'){
+    if (typeof commands === 'string') {
         commands = [commands];
     };
 
     console.log(`| Registering command '${commands[0]}'`);
 
-    for(const command of commands){
+    for (const command of commands) {
         allCommands[command] = {
             ...commandOptions,
             commands,
@@ -31,9 +31,9 @@ module.exports.listen = (client) => {
         // Remove the command
         const name = arguments.shift().toLowerCase();
 
-        if(name.startsWith(prefix)){
+        if (name.startsWith(prefix)) {
             const command = allCommands[name.replace(prefix, '')]
-            if(!command){
+            if (!command) {
                 return;
             }
 
@@ -41,5 +41,5 @@ module.exports.listen = (client) => {
 
             callback(message, client, guild, arguments, arguments.join(' '));
         }
-    })  
+    })
 }

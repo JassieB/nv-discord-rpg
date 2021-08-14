@@ -7,26 +7,28 @@ const client = new Discord.Client({
 // Other Requires
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // File Requires
-const config = require("./config.json");
 const mongo = require('./mongo.js');
 
 // Collections
 
-client.on('ready', () => {
-    mongo();
+client.on('ready', async () => {
+    await mongo();
 
     const baseFile = 'command-base.js';
     const commandBase = require(`./commands/${baseFile}`);
 
     const readCommands = dir => {
         const files = fs.readdirSync(path.join(__dirname, dir));
-        for(const file of files){
+        for (const file of files) {
             const stat = fs.lstatSync(path.join(__dirname, dir, file));
-            if(stat.isDirectory()){
+            if (stat.isDirectory()) {
                 readCommands(path.join(dir, file));
-            } else if(file !== baseFile){
+            } else if (file !== baseFile) {
                 const option = require(path.join(__dirname, dir, file));
                 commandBase(option);
             };
@@ -38,23 +40,23 @@ client.on('ready', () => {
 
     const readEvents = dir => {
         const files = fs.readdirSync(path.join(__dirname, dir));
-        for(const file of files){
+        for (const file of files) {
             const stat = fs.lstatSync(path.join(__dirname, dir, file));
-            if(stat.isDirectory()){
+            if (stat.isDirectory()) {
                 readEvents(path.join(dir, file));
-            } else if(file !== eBaseFile){
+            } else if (file !== eBaseFile) {
                 const option = require(path.join(__dirname, dir, file));
                 eventBase(client, option);
             };
         };
     };
 
-    readEvents('events');
-    readCommands('commands');
+    await readEvents('events');
+    await readCommands('commands');
 
     commandBase.listen(client);
 
     console.log("Bot has Started");
 });
 
-client.login(config.token);
+client.login(process.env.TOKEN);

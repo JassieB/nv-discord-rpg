@@ -16,6 +16,7 @@ module.exports = {
 					+ 'After 3 minutes with no interaction this message will delete. This is so we can keep the channels clean.'
 				);
 
+			// Character Pages
 			let characterMainpage = new Discord.MessageEmbed()
 				.setTitle('Characters')
 				.setDescription('Characters are essential in any game, so our character creation system has made it easier than ever to create new characters.\n'
@@ -27,6 +28,7 @@ module.exports = {
 				.setTitle('3')
 				.setDescription('lol');
 
+			//
 			let embed4 = new Discord.MessageEmbed()
 				.setTitle('4')
 				.setDescription('lol');
@@ -109,11 +111,17 @@ module.exports = {
 					if (interaction.values[0] == 'characters') {
 
 						current = characterEmbeds;
+						current.forEach(e => {
+							e.setFooter(`Page ${page} of ${current.length}`)
+						});
 						pagination(msg, client, message.channel, message.member, current, typeSelect, page)
 
 					} else if (interaction.values[0] == 'test-list2') {
 
 						current = guildEmbeds;
+						current.forEach(e => {
+							e.setFooter(`Page ${page} of ${current.length}`)
+						});
 						pagination(msg, client, message.channel, message.member, current, typeSelect, page)
 
 					}

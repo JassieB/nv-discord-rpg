@@ -70,8 +70,6 @@ module.exports = {
 				mainpage
 			];
 
-			let nullMsg = null;
-
 			const msg = await pagination(null, client, message.channel, message.member, current, typeSelect, page);
 
 			const filter = (interaction) => {

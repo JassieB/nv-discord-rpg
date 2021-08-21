@@ -10,14 +10,16 @@ module.exports = {
 
 			// Embeds
 			let mainpage = new Discord.MessageEmbed()
+				.setAuthor(`Requested by ${message.member.nickname}`)
 				.setTitle('How To Play')
-				.setDescription('This is the how to play menu. Here you can find out the basics of how to play The Night\'s Ventures. '
+				.setDescription('This is the how to play menu. Here you can find out the basics of how to play The Night\'s Ventures.'
 					+ 'To learn how to play, select a category from the Select Menu below and use the buttons to navigate through the pages.\n'
-					+ 'After 3 minutes with no interaction this message will delete. This is so we can keep the channels clean.'
+					+ '\nAfter 3 minutes with no interaction this message will delete. This is so we can keep the channels clean.'
 				);
 
 			// Character Pages
 			let characterMainpage = new Discord.MessageEmbed()
+				.setAuthor(`Requested by ${message.member.nickname}`)
 				.setTitle('Characters')
 				.setDescription('Characters are essential in any game, so our character creation system has made it easier than ever to create new characters.\n'
 					+ '\nYou can only create a character when you start the game or when you have died.\n'
@@ -25,15 +27,18 @@ module.exports = {
 				);
 
 			let characterExplanation = new Discord.MessageEmbed()
+				.setAuthor(`Requested by ${message.member.nickname}`)
 				.setTitle('3')
 				.setDescription('lol');
 
 			//
 			let embed4 = new Discord.MessageEmbed()
+				.setAuthor(`Requested by ${message.member.nickname}`)
 				.setTitle('4')
 				.setDescription('lol');
 
 			let embed5 = new Discord.MessageEmbed()
+				.setAuthor(`Requested by ${message.member.nickname}`)
 				.setTitle('5')
 				.setDescription('lol');
 
@@ -93,15 +98,27 @@ module.exports = {
 
 						case '1':
 							page = 0;
+							current.forEach(e => {
+								e.setFooter(`Page ${page + 1} of ${current.length}`)
+							});
 							return pagination(msg, client, message.channel, message.member, current, typeSelect, page);
 						case '2':
 							--page;
+							current.forEach(e => {
+								e.setFooter(`Page ${page + 1} of ${current.length}`)
+							});
 							return pagination(msg, client, message.channel, message.member, current, typeSelect, page);
 						case '3':
 							++page;
+							current.forEach(e => {
+								e.setFooter(`Page ${page + 1} of ${current.length}`)
+							});
 							return pagination(msg, client, message.channel, message.member, current, typeSelect, page);
 						case '4':
 							page = current.length - 1;
+							current.forEach(e => {
+								e.setFooter(`Page ${page + 1} of ${current.length}`)
+							});
 							return pagination(msg, client, message.channel, message.member, current, typeSelect, page);
 
 					}
@@ -112,7 +129,7 @@ module.exports = {
 
 						current = characterEmbeds;
 						current.forEach(e => {
-							e.setFooter(`Page ${page} of ${current.length}`)
+							e.setFooter(`Page ${page + 1} of ${current.length}`)
 						});
 						pagination(msg, client, message.channel, message.member, current, typeSelect, page)
 
@@ -120,7 +137,7 @@ module.exports = {
 
 						current = guildEmbeds;
 						current.forEach(e => {
-							e.setFooter(`Page ${page} of ${current.length}`)
+							e.setFooter(`Page ${page + 1} of ${current.length}`)
 						});
 						pagination(msg, client, message.channel, message.member, current, typeSelect, page)
 

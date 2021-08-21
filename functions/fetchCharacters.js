@@ -1,18 +1,18 @@
-const Settings = require('../models/guildsettings');
+const Character = require('../models/character.js');
 const fs = require('fs');
 const Discord = require('discord.js');
 
-async function getSettings(client, guildId) {
+async function getCharacter(client, user, guildId) {
 
     const channel = client.channels.cache.get('859802682599800852');
 
     try {
 
-        const settings = await Settings.findOne({ guildID: guildId });
+        const character = await Character.findOne({ guildID: guildId, userID: user.id });
 
-        if (settings) {
+        if (character) {
 
-            return settings;
+            return character;
 
         } else {
 
@@ -26,7 +26,6 @@ async function getSettings(client, guildId) {
 
     }
 
-
 }
 
-module.exports = getSettings;
+module.exports = getCharacter;

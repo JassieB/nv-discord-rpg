@@ -10,12 +10,18 @@ module.exports = {
 
 			// Embeds
 			let mainpage = new Discord.MessageEmbed()
-				.setTitle('1')
-				.setDescription('lol');
+				.setTitle('How To Play')
+				.setDescription('This is the how to play menu. Here you can find out the basics of how to play The Night\'s Ventures. '
+					+ 'To learn how to play, select a category from the Select Menu below and use the buttons to navigate through the pages.\n'
+					+ 'After 3 minutes with no interaction this message will delete. This is so we can keep the channels clean.'
+				);
 
 			let characterMainpage = new Discord.MessageEmbed()
-				.setTitle('2')
-				.setDescription('lol');
+				.setTitle('Characters')
+				.setDescription('Characters are essential in any game, so our character creation system has made it easier than ever to create new characters.\n'
+					+ '\nYou can only create a character when you start the game or when you have died.\n'
+					+ '\nPage through this embed using the buttons below to view specifics of character mechanics.'
+				);
 
 			let characterExplanation = new Discord.MessageEmbed()
 				.setTitle('3')
@@ -66,7 +72,7 @@ module.exports = {
 
 			let nullMsg = null;
 
-			const msg = await pagination(null, message.channel, current, typeSelect, page);
+			const msg = await pagination(null, client, message.channel, message.member, current, typeSelect, page);
 
 			const filter = (interaction) => {
 				if (interaction.user.id != message.member.user.id) {
@@ -76,7 +82,7 @@ module.exports = {
 				}
 			};
 
-			const collector = msg.createMessageComponentCollector({ filter, idle: 20000 });
+			const collector = msg.createMessageComponentCollector({ filter, idle: 180000 });
 
 			collector.on('collect', async (interaction) => {
 				interaction.deferUpdate();
@@ -87,16 +93,16 @@ module.exports = {
 
 						case '1':
 							page = 0;
-							return pagination(msg, message.channel, message.member, current, typeSelect, page);
+							return pagination(msg, client, message.channel, message.member, current, typeSelect, page);
 						case '2':
 							--page;
-							return pagination(msg, message.channel, message.member, current, typeSelect, page);
+							return pagination(msg, client, message.channel, message.member, current, typeSelect, page);
 						case '3':
 							++page;
-							return pagination(msg, message.channel, message.member, current, typeSelect, page);
+							return pagination(msg, client, message.channel, message.member, current, typeSelect, page);
 						case '4':
 							page = current.length - 1;
-							return pagination(msg, message.channel, message.member, current, typeSelect, page);
+							return pagination(msg, client, message.channel, message.member, current, typeSelect, page);
 
 					}
 
@@ -105,12 +111,12 @@ module.exports = {
 					if (interaction.values[0] == 'characters') {
 
 						current = characterEmbeds;
-						pagination(msg, message.channel, message.member, current, typeSelect, page)
+						pagination(msg, client, message.channel, message.member, current, typeSelect, page)
 
 					} else if (interaction.values[0] == 'test-list2') {
 
 						current = guildEmbeds;
-						pagination(msg, message.channel, message.member, current, typeSelect, page)
+						pagination(msg, client, message.channel, message.member, current, typeSelect, page)
 
 					}
 
@@ -124,14 +130,13 @@ module.exports = {
 
 			})
 
-		} catch (err) {
+		} catch (error) {
 
+			const logChannel = client.channels.cache.get('859802682599800852');
 
+			logChannel.send({ content: `${error} \n${message.url}` });
 
 		}
-
-
-
 
 	}
 

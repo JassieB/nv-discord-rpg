@@ -1,69 +1,50 @@
-const Character = require('../../models/character.js');
-const Inventory = require('../../models/inventory.js');
+const getCharacter = require('../../functions/fetchCharacters.js');
+const getInventory = require('../../functions/fetchInventories.js');
+const getSettings = require('../../functions/fetchSettings.js');
+const pagination = require('../../functions/pagination.js');
 const Discord = require('discord.js');
-const Settings = require('../../models/guildsettings.js');
 
 module.exports = {
     commands: ['card'],
     description: '',
     callback: async (message, client, guild, arguments) => {
 
-        Settings.findOne({
-            guildID: guild.id,
-        },
-            (err, settings) => {
-                if (err) console.error(err);
+        const settings = await getSettings(client, guild.id);
+        const character = await getCharacter(client, message.member, guild.id);
+        const inventory = await getInventory(client, message.member, guild.id);
 
-                if (settings.commandsActive == true || message.member.user.id == '714070826248437770') {
+        if (!settings) return;
+        if (!character) return;
+        if (!inventory) return;
 
-                    Character.findOne({
-                        guildID: guild.id,
-                        userID: message.member.user.id,
-                    },
-                        (err, character) => {
-                            if (err) return console.error(err);
+        if (settings.commandsActive == true) {
 
-                            Inventory.findOne({
-                                guildID: guild.id,
-                                userID: message.member.user.id,
-                            },
-                                (err, inventory) => {
-                                    if (err) return console.error(err);
+            try {
 
-                                    if (!character || !inventory) {
+                // Select Menus
+                const typeSelect = new Discord.MessageSelectMenu()
+                    .setCustomId('player-card')
+                    .setPlaceholder('Categories')
+                    .addOptions(
+                        {
+                            label: 'Main Stats',
+                            value: 'mainstats'
+                        },
+                        {
+                            label: 'Attributes',
+                            value: 'attributes'
+                        }
+                    )
 
-                                        message.reply({ content: 'You do not have a character' });
+            } catch (error) {
 
-                                    } else {
+                const logChannel = client.channels.cache.get('859802682599800852');
 
-                                        const flexEmbed = new Discord.MessageEmbed()
-                                            .setTitle(`${character.charName}'s stats`)
-                                            .setColor('#ffffff')
-                                            .setThumbnail(message.member.user.avatarURL())
-                                            .addField('Age:', character.charAge.toString(), true)
-                                            .addField('Class:', character.class.toString(), true)
-                                            .addField('Coins:', character.coins.toString(), true)
-                                            .addField('Level:', character.level.toString(), true)
-                                            .addField('Skillpoints:', character.skillPoints.toString(), true)
-                                            .addField('\u200B', '\u200B', true)
-                                            .addField('Strength:', character.strength.toString(), true)
-                                            .addField('Intelligence:', character.intelligence.toString(), true)
-                                            .addField('Speed:', character.speed.toString(), true)
-                                            .addField('Agility:', character.agility.toString(), true)
-                                            .addField('Dexterity:', character.dexterity.toString(), true)
-                                            .addField('Charisma:', character.charisma.toString(), true)
-                                            .addField('Magic', character.magic.toString(), false)
-                                            .setFooter(`${message.member.user.tag}'s character`);
+                logChannel.send({ content: `${error} \n${message.url}` });
 
-                                        message.channel.send({ embeds: [flexEmbed] });
+            }
 
-                                    }
+        }
 
-                                })
-
-                        })
-
-                }
-            })
     }
 }

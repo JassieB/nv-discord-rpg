@@ -72,8 +72,6 @@ const characterSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    //
-    skills: [{}],
 })
 
 module.exports = Character = mongoose.model('Character', characterSchema);

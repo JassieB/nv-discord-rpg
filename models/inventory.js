@@ -12,6 +12,18 @@ const inventorySchema = new mongoose.Schema({
     username: reqString,
     charName: reqString,
     items: [{}],
+    equipment: {
+        type: Object,
+        leftHand: 'None',
+        rightHand: 'None',
+        fullBodyArmor: 'None',
+        headArmor: 'None',
+        chestArmor: 'None',
+        legArmor: 'None',
+        upperBodyWear: 'Rags',
+        legwear: 'Rags',
+        shoes: 'Worn Out Sneakers',
+    },
     currentWeight: {
         type: Number,
         default: 0.0,

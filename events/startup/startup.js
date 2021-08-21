@@ -7,7 +7,7 @@ module.exports = {
     description: '',
     callback: async (client, guild) => {
 
-        const settings = await getSettings('BOT', 'START LOGS', 'STARTING BOT', guild.id);
+        const settings = await getSettings(client, guild.id);
 
         if (settings.logsActive == true) {
             client.channels.cache.get('856448564849934337').send({ content: "Bot has Started" });

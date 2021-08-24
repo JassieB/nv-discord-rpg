@@ -1,67 +1,51 @@
 const Discord = require('discord.js');
-const Character = require('../../models/character.js');
-const Inventory = require('../../models/inventory.js');
-const Settings = require('../../models/guildsettings.js');
+const getCharacter = require('../../functions/fetchCharacters.js');
+const getInventory = require('../../functions/fetchInventories.js');
+const getSettings = require('../../functions/fetchSettings.js');
 
 module.exports = {
     commands: ['buy'],
     description: '',
     callback: async (message, client, guild, arguments) => {
 
-        Settings.findOne({
-            guildID: guild.id,
-        },
-        (err, settings) => {
-            if(err) console.error(err);
+        try {
 
-            if(settings.commandsActive == true || message.member.user.id == '714070826248437770'){
+            const settings = await getSettings(client, commands, guild.id);
+            const character = await getCharacter(client, message.member, guild.id);
+            const inventory = await getInventory(client, message.member, guild.id);
 
-                let itemName = arguments[0];
+            if (!settings) return;
+            if (!character) return;
+            if (!inventory) return;
 
-                const itemFile = require(`../../items/${itemName}.json`);
+            if (settings.commandsActive == true) {
 
-                Character.findOne({
-                    guildID: guild.id,
-                    userID: message.member.user.id,
-                },
-                (err, character) => {
-                    if(err) return console.error(err);
+                const item = require(`../../items/${arguments[0]}.json`)
 
-                    Inventory.findOne({
-                        guildID: guild.id,
-                        userID: message.member.user.id,
-                    },
-                    (err, inventory) => {
-                        if(err) return console.error(err);
+                if (!item) {
 
-                        if(character.coins < itemFile.price){
-                            message.channel.reply('You do not have enough coins to buy this item.');
-                        } else if((inventory.currentWeight + itemFile.weight) > inventory.maxWeight){
-                            message.channel.reply('You do not have enough space to carry this item.');
-                        } else {
-                    
-                            character.save();
-                            character.coins = character.coins - itemFile.price;
-                            inventory.currentWeight = inventory.currentWeight + itemFile.weight;
-                            inventory.items.push(itemFile.name);
-                            inventory.save()
+                    return;
 
-                            let buyEmbed = new Discord.MessageEmbed()
-                            .setTitle(`${message.member.nickname} bought ${itemFile.article} ${itemFile.name} from the Blacksmith`)
-                            .setDescription(`Cost: ${itemFile.price}\nDamage: ${itemFile.damage}\n Weight: ${itemFile.weight}`)
-                            .setTimestamp();
+                } else if (character.coins < item.price) {
 
-                            message.channel.send({ embeds: [ buyEmbed ] });
-                    
-                        }
+                    message.reply({ content: `You do not have enough coins to buy ${item.article} ${item.name}` });
 
-                    })
+                } else {
 
-                })
+                    inventory.items.push(item.name);
+                    message.reply({ content: `You have purchased ${item.article} ${item.name}` });
+
+                }
 
             }
 
-        })
+        } catch (error) {
+
+            const logChannel = client.channels.cache.get('859802682599800852');
+
+            logChannel.send({ content: `${error}` });
+
+        }
 
     }
 }

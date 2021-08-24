@@ -1,9 +1,9 @@
 const Settings = require('../models/guildsettings');
-const fs = require('fs');
+const Discord = require('discord.js');
 
-async function getSettings(caller, settingtype, reason, guildId) {
+async function getSettings(client, guildId) {
 
-    let time = new Date()
+    const channel = client.channels.cache.get('859802682599800852');
 
     try {
 
@@ -11,33 +11,17 @@ async function getSettings(caller, settingtype, reason, guildId) {
 
         if (settings) {
 
-            fs.appendFile(__dirname + '../../logs/mongologs.txt', `\n---${time}---\nSuccessfully Fetched Settings Configuration -${settingtype}- for: \n${reason} \nCalled by -${caller}-`, (err) => {
-                if (err) {
-                    fs.appendFile(__dirname + '../../logs/errorlogs.txt', `\n---${time}--- \nError: \n${err} \nRequiring Settings for: ${reason}`, (err) => {
-                        if (err) console.error(err);
-                    });
-                }
-            })
             return settings;
 
         } else {
 
-            fs.appendFile(__dirname + '../../logs/mongologs.txt', `\n---${time}---\nUnsuccessfully Fetched Settings Configuration -${settingtype}- for: \n${reason} \nCalled by -${caller}-`, (err) => {
-                if (err) {
-                    fs.appendFile(__dirname + '../../logs/errorlogs.txt', `\n---${time}--- \nError: \n${err} \nRequiring Settings for: ${reason}`, (err) => {
-                        if (err) console.error(err);
-                    });
-                }
-            })
             return null;
 
         }
 
     } catch (err) {
 
-        fs.appendFile(__dirname + '../../logs/errorlogs.txt', `\n---${time}--- \nError: \n${err} \nRequiring Settings for: ${reason}`, (err) => {
-            if (err) console.error(err);
-        });
+        channel.send({ content: `\`\`\`${err}\`\`\`` });
 
     }
 

@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-async function pagination(message, channel, user, embeds, selects, page, command) {
+async function pagination(message, client, channel, user, embeds, selects, page) {
 
     // Disabled Butttons
     const btnFirstDis = new Discord.MessageButton()
@@ -152,10 +152,6 @@ async function pagination(message, channel, user, embeds, selects, page, command
 
     try {
 
-        fs.appendFile(__dirname + '../../logs/functionlogs.txt', `\n---${time}--- \nRunning pagination for user: ${user.tag} \nRequested pagination for command: ${command}`, (err) => {
-            if (err) console.error(err);
-        });
-
         if (page == embeds.length - 1) currentRow = rowPO;
         if (page == 0) currentRow = rowNO;
         if ((page != embeds.length - 1) && (page != 0)) currentRow = rowEn;
@@ -170,11 +166,11 @@ async function pagination(message, channel, user, embeds, selects, page, command
 
         return msg;
 
-    } catch (e) {
+    } catch (error) {
 
-        fs.appendFile(__dirname + '../../logs/errorlogs.txt', `\n---${time}--- \nError: \n${err} \nRunning pagination for user: ${user.tag} \nRequested pagination for command: ${command}`, (err) => {
-            if (err) console.error(err);
-        });
+        const logChannel = client.channels.cache.get('859802682599800852');
+
+        logChannel.send({ content: `${error} \n${message.url}` });
 
     }
 

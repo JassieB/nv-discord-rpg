@@ -1,7 +1,6 @@
 const getCharacter = require('../../functions/fetchCharacters.js');
 const getInventory = require('../../functions/fetchInventories.js');
 const getSettings = require('../../functions/fetchSettings.js');
-const pagination = require('../../functions/pagination.js');
 const Discord = require('discord.js');
 
 module.exports = {

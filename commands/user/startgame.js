@@ -4,7 +4,6 @@ const charSchema = require('../../models/character.js');
 const invSchema = require('../../models/inventory.js');
 const Discord = require('discord.js');
 const Settings = require('../../models/guildsettings.js');
-//const ColourCodes = require('./helperFiles/colours');
 
 module.exports = {
     commands: ['startgame'],
@@ -13,11 +12,7 @@ module.exports = {
 
         let embed1 = new Discord.MessageEmbed()
             .setTitle(`Welcome ${message.member.username}`)
-            .setColor(ColourCodes.White)
             .setDescription("")
-
-
-
 
         Settings.findOne({
             guildID: guild.id,

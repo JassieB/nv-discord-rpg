@@ -7,26 +7,26 @@ module.exports = {
     commands: ['addcoins', 'givecoins'],
     description: '',
     callback: async (message, client, guild, arguments) => {
-        
-        if(!message.member.user.id == '714070826248437770'){
+
+        if (!message.member.user.id == '714070826248437770') {
             return;
         };
 
-        let amount = arguments[0] ;
+        let amount = arguments[0];
         let player = message.mentions.users.first();
 
         Money.findOne({
             guildID: guild.id,
             userID: player.id,
         },
-        (err, money) => {
-            if(err) return console.error(err);
+            (err, money) => {
+                if (err) return console.error(err);
 
-            money.coins = money.coins + amount;
+                money.coins = money.coins + amount;
 
-            money.save();
+                money.save();
 
-            message.channel.send("You added coins")
-        })
+                message.channel.send("You added coins")
+            })
     }
 }

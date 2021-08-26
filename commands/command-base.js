@@ -33,13 +33,15 @@ module.exports.listen = (client) => {
 
         if (name.startsWith(prefix)) {
             const command = allCommands[name.replace(prefix, '')]
-            if (!command) {
-                return;
-            }
+
+            if (!command) return;
+            if (message.channel.id == '856101369340887052') return;
 
             const { callback } = command;
 
             callback(message, client, guild, arguments, arguments.join(' '));
+
         }
+
     })
 }

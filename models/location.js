@@ -9,11 +9,8 @@ const reqString = {
 const locationsSchema = new mongoose.Schema({
     guildID: reqString,
     userID: reqString,
-    username: reqString,
-    town: reqString,
     name: reqString,
-    channel: reqString,
-    type: reqString,
+    subLocations: [{}],
 })
 
 module.exports = Locations = mongoose.model('Locations', locationsSchema);

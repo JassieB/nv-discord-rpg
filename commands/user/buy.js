@@ -10,7 +10,7 @@ module.exports = {
 
         try {
 
-            const settings = await getSettings(client, commands, guild.id);
+            const settings = await getSettings(client, guild.id);
             const character = await getCharacter(client, message.member, guild.id);
             const inventory = await getInventory(client, message.member, guild.id);
 
@@ -18,9 +18,7 @@ module.exports = {
             if (!character) return;
             if (!inventory) return;
 
-            if (settings.commandsActive == true) {
-
-                const item = require(`../../items/${arguments[0]}.json`)
+            if (settings.commandsActive == true || message.member.user.id == '714070826248437770') {
 
                 if (!item) {
 
@@ -32,7 +30,8 @@ module.exports = {
 
                 } else {
 
-                    inventory.items.push(item.name);
+                    inventory.items.push(item);
+                    inventory.save();
                     message.reply({ content: `You have purchased ${item.article} ${item.name}` });
 
                 }

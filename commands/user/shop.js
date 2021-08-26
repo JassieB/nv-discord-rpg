@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const shopJSON = require('../../models/shop.json');
 const Settings = require('../../models/guildsettings.js');
 
 module.exports = {
@@ -10,23 +9,23 @@ module.exports = {
         Settings.findOne({
             guildID: guild.id,
         },
-        (err, settings) => {
-            if(err) console.error(err);
+            (err, settings) => {
+                if (err) console.error(err);
 
-            if(settings.commandsActive == true || message.member.user.id == '714070826248437770'){
-                
-                let shopEmbed = new Discord.MessageEmbed()
-                .setTitle('Here are all the items currently available');
+                if (settings.commandsActive == true || message.member.user.id == '714070826248437770') {
 
-                shopJSON.forEach(item => {
-                    shopEmbed.addField(`${item.name}`, `${item.price}`)
-                })
+                    let shopEmbed = new Discord.MessageEmbed()
+                        .setTitle('Here are all the items currently available');
 
-                message.channel.send({ embeds: [ shopEmbed ] })
+                    shopJSON.forEach(item => {
+                        shopEmbed.addField(`${item.name}`, `${item.price}`)
+                    })
 
-            }
+                    message.channel.send({ embeds: [shopEmbed] })
 
-        })
+                }
+
+            })
 
     }
 }

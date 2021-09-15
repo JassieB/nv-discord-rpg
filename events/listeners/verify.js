@@ -12,7 +12,11 @@ module.exports = {
             const filter = (interaction) => {
 
                 const member = guild.members.cache.get(interaction.user.id);
-                if (member.roles.cache.has('867761358296711218')) {
+
+                const membChan = client.channels.cache.find(channel => channel.name === `${interaction.user.username.toLowerCase()}-starting`);
+                console.log(interaction.user.username.toLowerCase())
+
+                if (member.roles.cache.has('867761358296711218') || membChan) {
                     interaction.deferUpdate();
                 } else {
                     return interaction;

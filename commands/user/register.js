@@ -43,8 +43,8 @@ module.exports = {
                     });
 
                     let selectionEmbed = new Discord.MessageEmbed()
-                        .setTitle("Here is a list of Classes")
-                        .setDescription("Select a class to continue.");
+                        .setTitle("Welcome to the registration channel")
+                        .setDescription("To do anything in this world you need a class. Register as a class here. If you master every part of a class, you will be able to choose a subclass later.\n\nSelect a class to continue.");
 
                     const row = new Discord.MessageActionRow()
                         .addComponents(
@@ -55,28 +55,55 @@ module.exports = {
                                     {
                                         label: 'Adventurer',
                                         value: 'adventurer',
-                                        description: 'Adventurer class',
+                                    },
+                                    {
+                                        label: 'Blacksmith',
+                                        value: 'blacksmith',
+                                    },
+                                    {
+                                        label: 'Farmer',
+                                        value: 'farmer',
                                     }
                                 ])
                         )
 
-                    const msg = await channel.send({ embeds: [selection], components: [row] })
+                    const msg = await channel.send({ embeds: [selectionEmbed], components: [row] })
 
                     // wait for interaction
                     const collector = msg.createMessageComponentCollector({ time: 120000, max: 1 })
 
                     collector.on('collect', interaction => {
+
                         if (interaction.values[0] === 'adventurer') {
 
                             character.class = 'Adventurer';
                             character.coins = character.coins - 60;
                             character.save();
 
-                            channel.send({ content: 'Congratulations, you are now an Adventurer! The registration fee has been deducted and the channel will delete shortly.' })
-                            setTimeout(() => {
-                                channel.delete()
-                            }, 15000)
+                            channel.send({ content: 'You are now an Adventurer. The registration fee has been deducted and the channel will delete shortly.' })
+
+                        } else if (interaction.values[0] === 'blacksmith') {
+
+                            character.class = 'Blacksmith';
+                            character.coins = character.coins - 60;
+                            character.save();
+
+                            channel.send({ content: 'You are now a Blacksmith. The registration fee has been deducted and the channel will delete shortly.' })
+
+                        } else if (interaction.values[0] === 'farmer') {
+
+                            character.class = 'Farmer';
+                            character.coins = character.coins - 60;
+                            character.save();
+
+                            channel.send({ content: 'You are now a Farmer. The registration fee has been deducted and the channel will delete shortly.' })
+
                         }
+
+                        setTimeout(() => {
+                            channel.delete()
+                        }, 10000)
+
                     })
 
                 })

@@ -28,5 +28,6 @@ module.exports = {
 
                 message.channel.send("You added coins")
             })
+
     }
 }

@@ -4,6 +4,4 @@ node_modules/
 coverage/
 Database/
 .env
-styles.css
-/views
-/dashboard
+/slashes

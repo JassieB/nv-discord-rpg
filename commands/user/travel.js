@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
-const getLocations = require('../../functions/fetchLocations')
-const getLocalLocations = require('../../functions/fetchLocal');
-const getGlobalLocations = require('../../functions/fetchGlobal');
+const getLocations = require('../../functions/fetchLocations');
+const Locations = require('../../models/location');
 const getSettings = require('../../functions/fetchSettings.js');
 
 module.exports = {
@@ -11,8 +10,7 @@ module.exports = {
 
         const settings = await getSettings(client, guild.id);
         const location = await getLocations(client, message.channel.id, guild.id);
-        let localLocations;
-        let globalLocations;
+
         let localOptions = [];
         let globalOptions = [];
         let selectedOptions;
@@ -20,35 +18,17 @@ module.exports = {
         if (!settings) return;
         if (!location) return;
 
-        if (location.type == "Global") {
+        location.subLocations.forEach(location => {
 
-            globalLocations = await getGlobalLocations(client, guild.id);
+            localOptions.push({ label: location.name, value: location.channel })
 
-            if (globalLocations.length > 1) {
+        });
 
-                await globalLocations.forEach(async loc => {
+        Locations.forEach(location => {
 
-                    globalOptions.push({ label: `${loc.town}`, value: `${loc.channel}` })
+            globalOptions.push({ label: location.name, value: location.channel })
 
-                });
-
-            } else {
-
-                globalOptions.push({ label: `${globalLocations[0].town}`, value: `${globalLocations[0].channel}` })
-
-            }
-
-        } else {
-
-            localLocations = await getLocalLocations(client, location.town, guild.id);
-
-            await localLocations.forEach(async loc => {
-
-                localOptions.push({ label: `${loc.name}`, value: `${loc.channel}` })
-
-            });
-
-        }
+        });
 
         if (settings.commandsActive == true || message.member.user.id == '714070826248437770') {
 
@@ -107,8 +87,13 @@ module.exports = {
 
                 let msg;
                 let max;
+                let local = location.subLocations.find(location => {
 
-                if (location.type == "Local") {
+                    if (location.channel == message.channel.id) return location
+
+                });
+
+                if (local) {
 
                     message.delete();
                     max = 1;

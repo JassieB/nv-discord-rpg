@@ -9,7 +9,9 @@ const reqString = {
 const locationsSchema = new mongoose.Schema({
     guildID: reqString,
     userID: reqString,
+    founder: reqString,
     name: reqString,
+    channel: reqString,
     subLocations: [{}],
 })
 

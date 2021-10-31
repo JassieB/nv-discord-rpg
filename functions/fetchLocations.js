@@ -7,7 +7,9 @@ async function getLocations(client, travelChannel, guildId) {
 
     try {
 
-        const location = await Locations.findOne({ guildID: guildId, channel: travelChannel })
+        let location;
+
+        location = Locations.findOne({ channel: travelChannel });
 
         if (location) {
 

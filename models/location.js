@@ -15,4 +15,4 @@ const locationsSchema = new mongoose.Schema({
     subLocations: [{}],
 })
 
-module.exports = Locations = mongoose.model('Locations', locationsSchema);
+module.exports = Locations = mongoose.model('Location', locationsSchema);

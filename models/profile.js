@@ -6,7 +6,7 @@ const reqString = {
     required: true
 }
 
-const assetsSchema = new mongoose.Schema({
+const profileSchema = new mongoose.Schema({
     guildID: reqString,
     userID: reqString,
     username: reqString,
@@ -20,4 +20,4 @@ const assetsSchema = new mongoose.Schema({
     },
 })
 
-module.exports = Assets = mongoose.model('Assets', assetsSchema);
+module.exports = Profiles = mongoose.model('Profile', profileSchema);

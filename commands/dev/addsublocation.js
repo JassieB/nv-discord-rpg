@@ -12,7 +12,6 @@ module.exports = {
         try {
 
             const id = arguments[0];
-            const owner = arguments[1] + ' ' + arguments[2];
             const type = arguments[3];
 
             const name = client.channels.cache.get(id).name;
@@ -25,9 +24,9 @@ module.exports = {
 
             const newLocation = new Building(
                 name,
-                "N/A",
-                message.channel.id,
-                owner,
+                0,
+                id,
+                "City of Axel",
                 "Coming soon",
                 type
             )

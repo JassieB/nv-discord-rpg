@@ -34,6 +34,10 @@ const characterSchema = new mongoose.Schema({
         type: Number,
         default: 300,
     },
+    location: {
+        type: String,
+        default: 'axel streets',
+    },
     // Level
     level: {
         type: Number,

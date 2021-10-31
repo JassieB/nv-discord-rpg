@@ -14,21 +14,33 @@ module.exports = {
         let localOptions = [];
         let globalOptions = [];
         let selectedOptions;
+        let locations;
 
         if (!settings) return;
-        if (!location) return;
 
-        location.subLocations.forEach(location => {
+        if (location) {
 
-            localOptions.push({ label: location.name, value: location.channel })
+            location.subLocations.forEach(location => {
 
-        });
+                localOptions.push({ label: location.name, value: location.channel })
 
-        Locations.forEach(location => {
+            });
 
-            globalOptions.push({ label: location.name, value: location.channel })
+            locations = await Locations.find({})
 
-        });
+            locations.forEach(loc => {
+
+                let name = location.name.split(' ')[0];
+                globalOptions.push({ label: name, value: loc.channel });
+
+            })
+
+        } else if (!location) {
+
+            message.reply({ content: 'You must first leave the current building using `^leave`' });
+            return;
+
+        }
 
         if (settings.commandsActive == true || message.member.user.id == '714070826248437770') {
 
@@ -86,26 +98,9 @@ module.exports = {
                     )
 
                 let msg;
-                let max;
-                let local = location.subLocations.find(location => {
 
-                    if (location.channel == message.channel.id) return location
-
-                });
-
-                if (local) {
-
-                    message.delete();
-                    max = 1;
-                    msg = await message.channel.send({ content: `${message.member.user}`, embeds: [locationSelectEmbed], components: [rowLocal] });
-
-                } else {
-
-                    message.delete();
-                    max = 2;
-                    msg = await message.channel.send({ content: `${message.member.user}`, embeds: [travelSelectEmbed], components: [rowSelect] });
-
-                }
+                message.delete();
+                msg = await message.channel.send({ content: `${message.member.user}`, embeds: [travelSelectEmbed], components: [rowSelect] });
 
                 const filter = (interaction) => {
                     if (interaction.user.id != message.member.user.id) {
@@ -115,65 +110,29 @@ module.exports = {
                     }
                 };
 
-                const collector = msg.createMessageComponentCollector({ filter, max: max });
+                const collector = msg.createMessageComponentCollector({ filter, max: 2 });
 
                 collector.on('collect', async (interaction) => {
                     interaction.deferUpdate();
 
-                    if (max == 2) {
+                    if (interaction.values[0] == 'local') {
 
-                        if (interaction.values[0] == 'local') {
+                        selectedOptions = localOptions;
+                        msg.edit({ content: `${message.member.user}`, embeds: [locationSelectEmbed], components: [rowLocal] });
 
-                            selectedOptions = localOptions;
-                            msg.edit({ content: `${message.member.user}`, embeds: [locationSelectEmbed], components: [rowLocal] });
+                    } else if (interaction.values[0] == 'global') {
 
-                        } else if (interaction.values[0] == 'global') {
-
-                            selectedOptions = globalOptions;
-                            msg.edit({ content: `${message.member.user}`, embeds: [locationSelectEmbed], components: [rowGlobal] });
-
-                        } else {
-
-                            selectedOptions.forEach(async val => {
-
-                                if (interaction.values[0] == val.value) {
-
-                                    traveledEmbed.setAuthor(`${message.member.user.username} has left the ${location.name}`)
-                                    arrivedEmbed.setAuthor(`${message.member.user.username} has arrived in the ${val.label}`)
-
-                                    let newLoc = guild.channels.cache.find(channel => channel.id === val.value);
-
-                                    await newLoc.permissionOverwrites.edit(message.member, {
-                                        "VIEW_CHANNEL": true,
-                                        "SEND_MESSAGES": true,
-                                        "ADD_REACTIONS": true,
-                                        "READ_MESSAGE_HISTORY": true,
-                                    });
-
-                                    await message.channel.permissionOverwrites.edit(message.member, {
-                                        "VIEW_CHANNEL": false,
-                                        "SEND_MESSAGES": false,
-                                        "ADD_REACTIONS": false,
-                                        "READ_MESSAGE_HISTORY": false,
-                                    });
-
-                                    message.channel.send({ embeds: [traveledEmbed] });
-                                    newLoc.send({ embeds: [arrivedEmbed] });
-
-                                }
-
-                            })
-
-                        }
+                        selectedOptions = globalOptions;
+                        msg.edit({ content: `${message.member.user}`, embeds: [locationSelectEmbed], components: [rowGlobal] });
 
                     } else {
 
-                        localOptions.forEach(async val => {
+                        selectedOptions.forEach(async val => {
 
                             if (interaction.values[0] == val.value) {
 
-                                traveledEmbed.setAuthor(`${message.member.user.username} has left the ${location.name}`)
-                                arrivedEmbed.setAuthor(`${message.member.user.username} has arrived in the ${val.label}`)
+                                traveledEmbed.setAuthor(`${message.member.user.username} has left ${location.name}`)
+                                arrivedEmbed.setAuthor(`${message.member.user.username} has arrived in ${val.label}`)
 
                                 let newLoc = guild.channels.cache.find(channel => channel.id === val.value);
 
@@ -189,7 +148,7 @@ module.exports = {
                                     "SEND_MESSAGES": false,
                                     "ADD_REACTIONS": false,
                                     "READ_MESSAGE_HISTORY": false,
-                                })
+                                });
 
                                 message.channel.send({ embeds: [traveledEmbed] });
                                 newLoc.send({ embeds: [arrivedEmbed] });

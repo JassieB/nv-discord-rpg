@@ -14,8 +14,7 @@ const inventorySchema = new mongoose.Schema({
     items: [{}],
     equipment: {
         type: Object,
-        leftHand: 'None',
-        rightHand: 'None',
+        weapon: 'None',
         fullBodyArmor: 'None',
         headArmor: 'None',
         chestArmor: 'None',

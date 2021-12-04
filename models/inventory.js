@@ -21,7 +21,7 @@ const inventorySchema = new mongoose.Schema({
         legArmor: 'None',
         upperBodyWear: 'Rags',
         legwear: 'Rags',
-        shoes: 'Worn Out Sneakers',
+        shoes: 'Worn Out Sandals',
     },
     currentWeight: {
         type: Number,

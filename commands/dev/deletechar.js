@@ -30,7 +30,7 @@ module.exports = {
                         inventory.delete();
 
                         await memb.roles.cache.forEach(role => {
-                            if (role.id != '867761358296711218') {
+                            if (role.id !== '867761358296711218') {
                                 memb.roles.remove(role.id);
                             }
                         });

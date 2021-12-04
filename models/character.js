@@ -13,7 +13,7 @@ const characterSchema = new mongoose.Schema({
     charName: reqString,
     charAge: reqString,
     charRace: reqString,
-    characterLocation: reqString,
+    location: reqString,
     health: {
         type: Number,
         default: 100,

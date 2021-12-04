@@ -8,10 +8,10 @@ module.exports = (client, eventOptions) => {
     } = eventOptions;
 
     // Ensure the event and aliases are in an array
-    if(typeof events === 'string'){
+    if (typeof events === 'string') {
         events = [events];
     };
-    
+
     console.log(`| Registering event '${events[0]}'`);
 
     const guild = client.guilds.cache.get('856101368859066409');

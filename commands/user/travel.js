@@ -17,6 +17,7 @@ module.exports = {
         let locations;
 
         if (!settings) return;
+        if (!settings.commandsActive && !message.member.user.id == '714070826248437770') return message.reply('The game is currently paused.');
 
         if (location) {
 
@@ -150,8 +151,8 @@ module.exports = {
                                     "READ_MESSAGE_HISTORY": false,
                                 });
 
-                                message.channel.send({ embeds: [traveledEmbed] });
-                                newLoc.send({ embeds: [arrivedEmbed] });
+                                message.channel.send({ embeds: [traveledEmbed] }).delete({ timeout: 15000 });
+                                newLoc.send({ embeds: [arrivedEmbed] }).delete({ timeout: 15000 });
 
                             }
 

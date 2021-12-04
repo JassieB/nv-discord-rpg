@@ -5,49 +5,80 @@ module.exports = {
     description: '',
     callback: async (client, guild) => {
 
-        const chan = client.channels.cache.get('856103300415094844');
+        try {
 
-        (async function () {
+            // get welcome channel
+            const chan = client.channels.cache.get('856103300415094844');
 
-            const filter = (interaction) => {
+            (async function () {
 
-                const member = guild.members.cache.get(interaction.user.id);
+                // create interaction filter
+                const filter = (interaction) => {
 
-                const membChan = client.channels.cache.find(channel => channel.name === `${interaction.user.username.toLowerCase()}-starting`);
-                console.log(interaction.user.username.toLowerCase())
+                    const member = guild.members.cache.get(interaction.user.id);
 
-                if (member.roles.cache.has('867761358296711218') || membChan) {
+                    // find member starting channel
+                    const membChan = client.channels.cache.find(channel => channel.name === `${interaction.user.username.toLowerCase()}-starting`);
+
+                    // defer if member is verified or already has a starting channel
+                    if (member.roles.cache.has('867761358296711218') || membChan) {
+
+                        interaction.deferUpdate();
+
+                    } else {
+
+                        return interaction;
+
+                    }
+
+                };
+
+                const collector = chan.createMessageComponentCollector({ filter });
+
+                collector.on('collect', async (interaction) => {
+
+                    // get guild member and generate colour
+                    const member = guild.members.cache.get(interaction.user.id);
+                    const colour = '#' + Math.floor(Math.random() * (Math.floor(Math.random() * (16000000 - 6000000) + 6240000) - Math.floor(Math.random() * (12000000 - 4000000) + 4000000)) + Math.floor(Math.random() * (12000000 - 4000000) + 4500000)).toString(16);
+
                     interaction.deferUpdate();
-                } else {
-                    return interaction;
-                }
 
-            };
+                    // add verified role
+                    member.roles.add('867761358296711218');
 
-            const collector = chan.createMessageComponentCollector({ filter })
+                    let welcomeEmbed = new Discord.MessageEmbed()
+                        .setTitle(`**Welcome ${member.user.username}!**`)
+                        .setDescription("This Server and Bot are still deep in the develpment stages. Things might break, be buggy or missing, but don't let that put you off!\nBefore you begin, you can use \`^howtoplay\` to read up on how the game works. When you're ready to get started, you can use `^startgame` to start the character creation process and enter the game.")
+                        .setColor(colour)
+                        .setTimestamp();
 
-            collector.on('collect', async (interaction) => {
+                    // create and edit channel permissions
+                    guild.channels.create(`${member.user.username.toLowerCase()}-starting`).then(async channel => {
 
-                const member = guild.members.cache.get(interaction.user.id);
-                interaction.deferUpdate();
-                member.roles.add('867761358296711218');
+                        await channel.setParent('867760786134925353');
 
-                guild.channels.create(`${member.user.username.toLowerCase()}-starting`).then(async channel => {
-                    await channel.setParent('867760786134925353');
+                        await channel.permissionOverwrites.edit(member, {
+                            "VIEW_CHANNEL": true,
+                            "SEND_MESSAGES": true,
+                            "READ_MESSAGE_HISTORY": true,
+                        });
 
-                    await channel.permissionOverwrites.edit(member, {
-                        "VIEW_CHANNEL": true,
-                        "SEND_MESSAGES": true,
-                        "READ_MESSAGE_HISTORY": true,
-                    })
+                        // send embed
+                        await channel.send({ embeds: [welcomeEmbed] });
 
-                    await channel.send({ content: `**Welcome ${member.user.username}!**\nThis Server and Bot are still deep in the develpment stages. Things might break, be buggy or missing, but don't let that put you off! Updates roll out at least once a week.\nWhen you're ready to get started, you can use \`^startgame\` to start the character creation process and enter the game.` })
+                    });
 
                 });
 
-            });
+            })();
 
-        })()
+        } catch (error) {
+
+            const logChannel = client.channels.cache.get('859802682599800852');
+
+            logChannel.send({ content: `${error}` });
+
+        }
 
     }
 }

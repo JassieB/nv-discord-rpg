@@ -59,10 +59,6 @@ module.exports = {
                                     {
                                         label: 'Blacksmith',
                                         value: 'blacksmith',
-                                    },
-                                    {
-                                        label: 'Farmer',
-                                        value: 'farmer',
                                     }
                                 ])
                         )
@@ -90,21 +86,12 @@ module.exports = {
 
                             channel.send({ content: 'You are now a Blacksmith. The registration fee has been deducted and the channel will delete shortly.' })
 
-                        } else if (interaction.values[0] === 'farmer') {
-
-                            character.class = 'Farmer';
-                            character.coins = character.coins - 60;
-                            character.save();
-
-                            channel.send({ content: 'You are now a Farmer. The registration fee has been deducted and the channel will delete shortly.' })
-
                         }
-
-                        setTimeout(() => {
-                            channel.delete()
-                        }, 10000)
-
                     })
+
+                    setTimeout(() => {
+                        channel.delete()
+                    }, 10000)
 
                 })
 
@@ -114,3 +101,4 @@ module.exports = {
 
     }
 }
+

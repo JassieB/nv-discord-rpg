@@ -8,9 +8,12 @@ module.exports = {
 
 		try {
 
+			let name;
+			name = message.member.nickname != null ? message.member.nickname : message.member.user.username;
+
 			// Embeds
 			let mainpage = new Discord.MessageEmbed()
-				.setAuthor(`Requested by ${message.member.nickname}`)
+				.setAuthor(`Requested by ${name}`)
 				.setTitle('How To Play')
 				.setDescription('This is the how to play menu. Here you can find out the basics of how to play The Night\'s Ventures.'
 					+ 'To learn how to play, select a category from the Select Menu below and use the buttons to navigate through the pages.\n'
@@ -19,7 +22,7 @@ module.exports = {
 
 			// Character Pages
 			let characterMainpage = new Discord.MessageEmbed()
-				.setAuthor(`Requested by ${message.member.nickname}`)
+				.setAuthor(`Requested by ${name}`)
 				.setTitle('Characters')
 				.setDescription('Characters are essential in any game, so our character creation system has made it easier than ever to create new characters.\n'
 					+ '\nYou can only create a character when you start the game or when you have died.\n'
@@ -27,18 +30,18 @@ module.exports = {
 				);
 
 			let characterExplanation = new Discord.MessageEmbed()
-				.setAuthor(`Requested by ${message.member.nickname}`)
+				.setAuthor(`Requested by ${name}`)
 				.setTitle('3')
 				.setDescription('lol');
 
 			//
 			let embed4 = new Discord.MessageEmbed()
-				.setAuthor(`Requested by ${message.member.nickname}`)
+				.setAuthor(`Requested by ${name}`)
 				.setTitle('4')
 				.setDescription('lol');
 
 			let embed5 = new Discord.MessageEmbed()
-				.setAuthor(`Requested by ${message.member.nickname}`)
+				.setAuthor(`Requested by ${name}`)
 				.setTitle('5')
 				.setDescription('lol');
 
@@ -64,8 +67,12 @@ module.exports = {
 						value: 'characters'
 					},
 					{
-						label: 'Test list 2',
-						value: 'test-list2'
+						label: 'Guilds',
+						value: 'guilds'
+					},
+					{
+						label: 'Time Cycles',
+						value: 'time cycles'
 					}
 				)
 
@@ -87,7 +94,7 @@ module.exports = {
 				}
 			};
 
-			const collector = msg.createMessageComponentCollector({ filter, idle: 180000 });
+			const collector = msg.createMessageComponentCollector({ filter, idle: 100000 });
 
 			collector.on('collect', async (interaction) => {
 				interaction.deferUpdate();
@@ -133,7 +140,7 @@ module.exports = {
 						});
 						pagination(msg, client, message.channel, message.member, current, typeSelect, page)
 
-					} else if (interaction.values[0] == 'test-list2') {
+					} else if (interaction.values[0] == 'guilds') {
 
 						current = guildEmbeds;
 						current.forEach(e => {

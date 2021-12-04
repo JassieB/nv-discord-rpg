@@ -17,6 +17,7 @@ module.exports = {
             if (!settings) return;
             if (!character) return;
             if (!inventory) return;
+            if (!settings.commandsActive && !message.member.user.id == '714070826248437770') return message.reply('The game is currently paused.');
 
             if (settings.commandsActive == true || message.member.user.id == '714070826248437770') {
 

@@ -1,6 +1,13 @@
 const Discord = require('discord.js');
 const getSettings = require('../../functions/fetchSettings');
 
+/*
+TODO:
+- Update day count after 24 hours
+- Update season after 32 days
+- Update year after 4 seasons/128 days
+*/
+
 module.exports = {
     events: ['day/night-cycle'],
     description: '',
@@ -8,8 +15,8 @@ module.exports = {
 
         const settings = await getSettings(client, guild.id);
 
-        //if (!settings) return;
-        //if (!settings.timeActive) return;
+        if (!settings) return;
+        if (!settings.timeActive) return;
 
         // create day embed
         const dayEmbed = new Discord.MessageEmbed()
@@ -103,7 +110,7 @@ module.exports = {
             // set channel name
             await timeChannel.setName(newTime);
 
-            setTimeout(() => { updateTime(); }, 240000)
+            setTimeout(() => { updateTime(); }, 420000)
 
         })()
 

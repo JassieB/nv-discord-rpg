@@ -4,4 +4,4 @@ node_modules/
 coverage/
 Database/
 .env
-/slashes
+slash commands/

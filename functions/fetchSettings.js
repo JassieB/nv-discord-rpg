@@ -1,4 +1,5 @@
 const Settings = require('../models/guildsettings');
+const updateLog = require('../functions/updateLog.js');
 const Discord = require('discord.js');
 
 async function getSettings(client, guildId) {

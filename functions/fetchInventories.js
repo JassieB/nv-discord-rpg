@@ -1,4 +1,5 @@
 const Inventory = require('../models/inventory.js');
+const updateLog = require('../functions/updateLog.js');
 const Discord = require('discord.js');
 
 async function getInventory(client, user, guildId) {

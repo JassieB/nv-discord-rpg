@@ -45,6 +45,10 @@ module.exports = {
                 .setTitle(`Character Creation`)
                 .setDescription("Hello aspiring adventurer! \nIt seems you are new here. I'm going to ask you some questions so we can get started on making your profile for this world. Please choose your answers carefully and DO NOT use anything offensive.\nYou will have 2 minutes per question.\n\nFirst off, what would you like your name to be?  (Full name)");
 
+            let questionEmbed2 = new Discord.MessageEmbed()
+                .setTitle(`Character Creation`)
+                .setDescription(`${name}? Okay then.\nAnd how old would you like to be? You have to choose an age between 15 and 35, since we don't want you to be too young and characters age over time.`);
+
             // verify command is used in starting channel
             if (message.channel.name !== `${message.member.user.username.toLowerCase()}-starting`) return;
 
@@ -63,7 +67,7 @@ module.exports = {
 
                     let name = collected.first().content;
 
-                    const msg1 = await message.channel.send({ content: `${name}? Okay then.\nAnd how old would you like to be? You have to choose an age between 15 and 35, since we don't want you to be too young and characters age over time.` });
+                    const msg1 = await message.channel.send({ embeds: [questionEmbed2] });
 
                     msg1.channel.awaitMessages({ max: 1, time: 120000, errors: ['time'] }).then(async collected => {
 

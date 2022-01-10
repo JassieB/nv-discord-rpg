@@ -1,4 +1,5 @@
 const Character = require('../models/character.js');
+const updateLog = require('../functions/updateLog.js');
 const Discord = require('discord.js');
 
 async function getCharacter(client, user, guildId) {

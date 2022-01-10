@@ -1,4 +1,5 @@
 const Locations = require('../models/location.js');
+const updateLog = require('../functions/updateLog.js');
 const Discord = require('discord.js');
 
 async function getLocations(client, travelChannel, guildId) {

@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const updateLog = require('../functions/updateLog.js');
 
 async function pagination(message, client, channel, user, embeds, selects, page) {
 
@@ -168,9 +169,9 @@ async function pagination(message, client, channel, user, embeds, selects, page)
 
     } catch (error) {
 
-        const logChannel = client.channels.cache.get('859802682599800852');
+        const eventInfo = `${user.member.tag} requested Pagination in <#${channel.id}>. Action failed.`;
 
-        logChannel.send({ content: `${error} \n${message.url}` });
+        updateLog(client, null, eventInfo, error);
 
     }
 

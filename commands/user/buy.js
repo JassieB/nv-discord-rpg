@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const updateLog = require('../../functions/updateLog.js');
 const getCharacter = require('../../functions/fetchCharacters.js');
 const getInventory = require('../../functions/fetchInventories.js');
 const getSettings = require('../../functions/fetchSettings.js');
@@ -19,31 +20,25 @@ module.exports = {
             if (!inventory) return;
             if (!settings.commandsActive && !message.member.user.id == '714070826248437770') return message.reply('The game is currently paused.');
 
-            if (settings.commandsActive == true || message.member.user.id == '714070826248437770') {
+            if (!item) {
 
-                if (!item) {
+                return;
 
-                    return;
+            } else if (character.coins < item.price) {
 
-                } else if (character.coins < item.price) {
+                message.reply({ content: `You do not have enough coins to buy ${item.article} ${item.name}` });
 
-                    message.reply({ content: `You do not have enough coins to buy ${item.article} ${item.name}` });
+            } else {
 
-                } else {
-
-                    inventory.items.push(item);
-                    inventory.save();
-                    message.reply({ content: `You have purchased ${item.article} ${item.name}` });
-
-                }
+                inventory.items.push(item);
+                inventory.save();
+                message.reply({ content: `You have purchased ${item.article} ${item.name}` });
 
             }
 
         } catch (error) {
 
-            const logChannel = client.channels.cache.get('859802682599800852');
-
-            logChannel.send({ content: `${error}` });
+            updateLog();
 
         }
 
